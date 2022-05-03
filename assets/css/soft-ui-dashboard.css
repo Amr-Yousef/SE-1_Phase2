@@ -52,7 +52,7 @@
   --bs-font-sans-serif: Open Sans;
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
-  --bs-body-font-family: var(--bs-font-sans-serif);
+  --bs-body-font-family: Tajawal;
   --bs-body-font-size: 1rem;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
@@ -74,7 +74,7 @@
 
 body {
   margin: 0;
-  font-family: var(--bs-body-font-family);
+  font-family: Tajawal;
   font-size: var(--bs-body-font-size);
   font-weight: var(--bs-body-font-weight);
   line-height: var(--bs-body-line-height);
@@ -280,7 +280,7 @@ pre,
 code,
 kbd,
 samp {
-  font-family: var(--bs-font-monospace);
+  font-family: Tajawal;
   font-size: 1em;
   direction: ltr
     /* rtl:ignore */
@@ -7021,7 +7021,7 @@ fieldset:disabled .btn {
   z-index: 1070;
   display: block;
   margin: 0;
-  font-family: var(--bs-font-sans-serif);
+  font-family: tajawal;
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -7148,7 +7148,7 @@ fieldset:disabled .btn {
   z-index: 1060;
   display: block;
   max-width: 276px;
-  font-family: var(--bs-font-sans-serif);
+  font-family: tajawal;
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -19781,8 +19781,8 @@ fieldset:disabled .btn {
 * Soft UI Dashboard - v1.0.5
 =========================================================
 
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+* Product Page: #/product/soft-ui-dashboard
+* Copyright 2022 Creative Tim (#)
 * Licensed under MIT (site.license)
 
 * Coded by www.creative-tim.com
@@ -20548,7 +20548,7 @@ fieldset:disabled .btn {
 }
 
 .card .card-body {
-  font-family: "Open Sans";
+  /* font-family: "Open Sans"; */
   padding: 1.5rem;
 }
 
