@@ -25650,6 +25650,7 @@ span.flatpickr-weekday {
 
 .flatpickr.form-control {
   background: #fff;
+  
 }
 
 .flatpickr-day.endRange.startRange+.endRange:not(:nth-child(7n+1)),
