@@ -5239,7 +5239,7 @@ fieldset:disabled .btn {
   }
 
   .navbar-expand-lg .navbar-nav .nav-link {
-    padding-right: 0.5rem;
+    padding-right: 9rem;
     padding-left: 0.5rem;
   }
 
@@ -9162,7 +9162,7 @@ fieldset:disabled .btn {
 }
 
 .me-1 {
-  margin-right: 0.25rem !important;
+  margin-left: 0.25rem !important;
 }
 
 .me-2 {
@@ -16865,7 +16865,7 @@ fieldset:disabled .btn {
   }
 
   .me-xl-7 {
-    margin-right: 6rem !important;
+    margin-right: 10rem !important;
   }
 
   .me-xl-8 {
