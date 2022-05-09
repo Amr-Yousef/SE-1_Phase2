@@ -13412,7 +13412,7 @@ fieldset:disabled .btn {
   }
 
   .ms-md-auto {
-    margin-right: auto !important;
+    /*margin-right: auto !important;*/
   }
 
   .m-md-n1 {
@@ -21332,6 +21332,10 @@ label,
 
 .bg-gradient-success {
   background-image: linear-gradient(-310deg, #17ad37 0%, #98ec2d 100%);
+}
+
+.bg-gradient-blocked {
+  background-image: linear-gradient(to right top, #ad1717, #b9332f, #c34a46, #cc5f5d, #d37373);
 }
 
 .bg-gradient-info {
