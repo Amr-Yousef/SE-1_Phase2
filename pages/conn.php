@@ -1,5 +1,5 @@
 <?php
-$conn = mysqli_connect("localhost","root","", "user-registration");
+$conn = mysqli_connect("localhost","root","", "cc fraud detection");
  
 // Check connection
 if (mysqli_connect_errno())
