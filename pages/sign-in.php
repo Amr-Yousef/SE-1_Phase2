@@ -14,11 +14,13 @@ if (isset($_POST["submit"])) {
                 $dbusername = $row['email'];
                 $dbpassword = $row['password'];
                 $dbname = $row['firstName'];
+                $dbSSN = $row['SSN'];
             }
 
             if ($user == $dbusername && $pass == $dbpassword) {
                 session_start();
                 $_SESSION['sess_user'] = $dbname;
+                $_SESSION['sess_SSN'] = $dbSSN;
                 header("Location: billing.php");
             }
         } else {

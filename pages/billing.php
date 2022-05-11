@@ -3,7 +3,22 @@ session_start();
 if (!isset($_SESSION["sess_user"])) {
   header("location:sign-in.php");
 } else {
-
+  // fetching the data from the database
+  include('conn.php');
+  $sql = "SELECT * FROM creditcards WHERE SSN = '" . $_SESSION['sess_SSN'] . "'";
+  $result = mysqli_query($conn, $sql);
+  $row = mysqli_fetch_array($result);
+  // // $fname = $row['firstName'];
+  // // $lname = $row['lastName'];
+  // // $email = $row['email'];
+  // // $phone = $row['phoneNo'];
+  // // $country = $row['country'];
+  // // $balance = $row['monthlyIncome'];
+  $CCN = $row['CCN'];
+  $cvv = $row['CCV'];
+  $balance = $row['Balance'];
+  $cardName = $row['nameOnCard'];
+  $expDate = $row['expDate'];
 ?>
   <!DOCTYPE html>
   <html lang="ar" dir="rtl">
@@ -149,12 +164,18 @@ if (!isset($_SESSION["sess_user"])) {
                     <span class="mask bg-gradient-dark"></span>
                     <div class="card-body position-relative z-index-1 p-3">
                       <i class="fas fa-wifi text-white p-2"></i>
-                      <h5 class="text-white mt-4 mb-5 pb-2">4562&nbsp;&nbsp;&nbsp;1122&nbsp;&nbsp;&nbsp;4594&nbsp;&nbsp;&nbsp;7852</h5>
+                      <h5 class="text-white mt-4 mb-5 pb-2">
+                        <!-- 4562&nbsp;&nbsp;&nbsp;1122&nbsp;&nbsp;&nbsp;4594&nbsp;&nbsp;&nbsp;7852 -->
+                        <?php
+                          $str = chunk_split($CCN, 4, '&nbsp;&nbsp;&nbsp;&nbsp;');
+                          echo $str;
+                        ?>
+                      </h5>
                       <div class="d-flex">
                         <div class="d-flex">
                           <div class="me-4">
                             <p class="text-white text-sm opacity-8 mb-0">Card Holder</p>
-                            <h6 class="text-white mb-0">person</h6>
+                            <h6 class="text-white mb-0"><?php echo $cardName ?></h6>
                           </div>
                           <div>
                             <p class="text-white text-sm opacity-8 mb-0">Expires</p>
@@ -182,7 +203,7 @@ if (!isset($_SESSION["sess_user"])) {
                         <h6 class="text-center mb-0">الرصيد الحالي</h6>
                         <span class="text-xs"></span>
                         <hr class="horizontal dark my-3">
-                        <h5 class="mb-0">15000ج.م.</h5>
+                        <h5 class="mb-0"><?php echo $balance ?>ج.م.</h5>
                       </div>
                     </div>
                   </div>
