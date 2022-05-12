@@ -133,9 +133,9 @@ if (!isset($_SESSION["sess_user"])) {
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
               <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">الصفحات&nbsp;&nbsp;</a></li>
-              <li class="breadcrumb-item text-sm text-dark active" aria-current="page">الفواتير</li>
+              <li class="breadcrumb-item text-sm text-dark active" aria-current="page">العمليات</li>
             </ol>
-            <h6 class="font-weight-bolder mb-0">الفواتير</h6>
+            <h6 class="font-weight-bolder mb-0">العمليات</h6>
           </nav>
           <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
             <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -167,8 +167,8 @@ if (!isset($_SESSION["sess_user"])) {
                       <h5 class="text-white mt-4 mb-5 pb-2">
                         <!-- 4562&nbsp;&nbsp;&nbsp;1122&nbsp;&nbsp;&nbsp;4594&nbsp;&nbsp;&nbsp;7852 -->
                         <?php
-                          $str = chunk_split($CCN, 4, '&nbsp;&nbsp;&nbsp;&nbsp;');
-                          echo $str;
+                        $str = chunk_split($CCN, 4, '&nbsp;&nbsp;&nbsp;&nbsp;');
+                        echo $str;
                         ?>
                       </h5>
                       <div class="d-flex">
@@ -179,7 +179,7 @@ if (!isset($_SESSION["sess_user"])) {
                           </div>
                           <div>
                             <p class="text-white text-sm opacity-8 mb-0">Expires</p>
-                            <h6 class="text-white mb-0">11/22</h6>
+                            <h6 class="text-white mb-0"><?php echo date('m/y', strtotime($expDate)) ?></h6>
                           </div>
                         </div>
                         <div class="ms-auto w-20 d-flex align-items-end justify-content-end">
@@ -203,7 +203,7 @@ if (!isset($_SESSION["sess_user"])) {
                         <h6 class="text-center mb-0">الرصيد الحالي</h6>
                         <span class="text-xs"></span>
                         <hr class="horizontal dark my-3">
-                        <h5 class="mb-0"><?php echo $balance ?>ج.م.</h5>
+                        <h5 class="mb-0"><?php echo number_format($balance) ?>ج.م.</h5>
                       </div>
                     </div>
                   </div>
@@ -216,132 +216,186 @@ if (!isset($_SESSION["sess_user"])) {
             </div>
           </div>
         </div>
-        <div class="row" style="margin-top: 4rem">
-          <div class="col-md-7 mt-4">
-            <div class="card">
-              <div class="card-header pb-0 px-3">
-                <h6 class="mb-0">تفاصيل الفواتير</h6>
-              </div>
-              <div class="card-body pt-4 p-3">
-                <ul class="list-group">
-                  <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-3 text-sm"></h6>
-                      <span class="mb-2 text-xs">اسم الشركه: <span class="text-dark font-weight-bold ms-sm-2">Viking Burrito</span></span>
-                      <span class="mb-2 text-xs">الايميل: <span class="text-dark ms-sm-2 font-weight-bold">oliver@burrito.com</span></span>
-                      <span class="text-xs">رقم الضريبه: <span class="text-dark ms-sm-2 font-weight-bold">FRB1235476</span></span>
-                    </div>
-                    <div class="ms-auto text-end">
-                      <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>حذف</a>
-                      <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>تعديل</a>
-                    </div>
-                  </li>
-                  <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-3 text-sm"></h6>
-                      <span class="mb-2 text-xs">اسم الشركه: <span class="text-dark font-weight-bold ms-sm-2">Stone Tech Zone</span></span>
-                      <span class="mb-2 text-xs">الايميل: <span class="text-dark ms-sm-2 font-weight-bold">lucas@stone-tech.com</span></span>
-                      <span class="text-xs">رقم الضريبه: <span class="text-dark ms-sm-2 font-weight-bold">FRB1235476</span></span>
-                    </div>
-                    <div class="ms-auto text-end">
-                      <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>حذف</a>
-                      <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>تعديل</a>
-                    </div>
-                  </li>
-                  <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-3 text-sm"></h6>
-                      <span class="mb-2 text-xs">اسم الشركه: <span class="text-dark font-weight-bold ms-sm-2">Fiber Notion</span></span>
-                      <span class="mb-2 text-xs">الايميل: <span class="text-dark ms-sm-2 font-weight-bold">ethan@fiber.com</span></span>
-                      <span class="text-xs">رقم الضريبه: <span class="text-dark ms-sm-2 font-weight-bold">FRB1235476</span></span>
-                    </div>
-                    <div class="ms-auto text-end">
-                      <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>حذف</a>
-                      <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>تعديل</a>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-5 mt-4">
-            <div class="card h-100 mb-4">
-              <div class="card-header pb-0 px-3">
-                <div class="row">
-                  <div class="col-md-6">
-                    <h6 class="mb-0">تعاملاتك</h6>
-                  </div>
-                  <div class="col-md-6 d-flex justify-content-end align-items-center">
-                    <i class="far fa-calendar-alt me-2"></i>
-                    <small>23 - 30 March 2020</small>
+
+        <div class="container-fluid py-4">
+          <div class="row">
+            <div class="col-12">
+              <div class="card mb-4">
+                <div class="card-header pb-0">
+                  <h6>آخر العمليات</h6>
+                </div>
+                <div class="card-body px-0 pt-0 pb-2">
+                  <div class="table-responsive p-0">
+                    <table class="table align-items-center mb-0">
+                      <thead>
+                        <tr>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">اسم العملية ورمزها</th>
+                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">المبلغ</th>
+                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">الحالة</th>
+                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">التاريخ</th>
+                          <th class="text-secondary opacity-7"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <div class="d-flex px-2 py-1">
+
+                              <div class="d-flex flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">وصف العملية</h6>
+                                <p class="text-xs text-secondary mb-0">رقم العملية</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">آلي</p>
+                            <p class="text-xs text-secondary mb-0">معدل إنحراف عالي</p>
+                          </td>
+                          <td class="align-middle text-center text-sm">
+                            <span class="badge badge-sm bg-gradient-success">تمت</span>
+                          </td>
+                          <td class="align-middle text-center">
+                            <span class="text-secondary text-xs font-weight-bold">dd/mm/yy</span>
+                          </td>
+                          <td class="align-middle">
+                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                              تعديل
+                            </a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="d-flex px-2 py-1">
+
+                              <div class="d-flex flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">الإسم الثنائي</h6>
+                                <p class="text-xs text-secondary mb-0">آخر أربعة أرقام من البطاقة</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">آلي</p>
+                            <p class="text-xs text-secondary mb-0">معدل إنحراف عالي</p>
+                          </td>
+                          <td class="align-middle text-center text-sm">
+                            <span class="badge badge-sm bg-gradient-secondary">معلقة</span>
+                          </td>
+                          <td class="align-middle text-center">
+                            <span class="text-secondary text-xs font-weight-bold">dd/mm/yy</span>
+                          </td>
+                          <td class="align-middle">
+                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                              تعديل
+                            </a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="d-flex px-2 py-1">
+
+                              <div class="d-flex flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">الإسم الثنائي</h6>
+                                <p class="text-xs text-secondary mb-0">آخر أربعة أرقام من البطاقة</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">آلي</p>
+                            <p class="text-xs text-secondary mb-0">معدل إنحراف عالي</p>
+                          </td>
+                          <td class="align-middle text-center text-sm">
+                            <span class="badge badge-sm bg-gradient-blocked">حظرت</span>
+                          </td>
+                          <td class="align-middle text-center">
+                            <span class="text-secondary text-xs font-weight-bold">dd/mm/yy</span>
+                          </td>
+                          <td class="align-middle">
+                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                              تعديل
+                            </a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="d-flex px-2 py-1">
+
+                              <div class="d-flex flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">الإسم الثنائي</h6>
+                                <p class="text-xs text-secondary mb-0">آخر أربعة أرقام من البطاقة</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">يدوي</p>
+                            <p class="text-xs text-secondary mb-0">معاملة خاطئة</p>
+                          </td>
+                          <td class="align-middle text-center text-sm">
+                            <span class="badge badge-sm bg-gradient-success">تمت</span>
+                          </td>
+                          <td class="align-middle text-center">
+                            <span class="text-secondary text-xs font-weight-bold">dd/mm/yy</span>
+                          </td>
+                          <td class="align-middle">
+                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                              تعديل
+                            </a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="d-flex px-2 py-1">
+
+                              <div class="d-flex flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">الإسم الثنائي</h6>
+                                <p class="text-xs text-secondary mb-0">آخر أربعة أرقام من البطاقة</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">يدوي</p>
+                            <p class="text-xs text-secondary mb-0">معاملة احتيالية</p>
+                          </td>
+                          <td class="align-middle text-center text-sm">
+                            <span class="badge badge-sm bg-gradient-secondary">معلقة</span>
+                          </td>
+                          <td class="align-middle text-center">
+                            <span class="text-secondary text-xs font-weight-bold">dd/mm/yy</span>
+                          </td>
+                          <td class="align-middle">
+                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                              تعديل
+                            </a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="d-flex px-2 py-1">
+                              <div class="d-flex flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">الإسم الثنائي</h6>
+                                <p class="text-xs text-secondary mb-0">آخر أربعة أرقام من البطاقة</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">يدوي</p>
+                            <p class="text-xs text-secondary mb-0">معاملة متكررة</p>
+                          </td>
+                          <td class="align-middle text-center text-sm">
+                            <span class="badge badge-sm bg-gradient-blocked">حظرت</span>
+                          </td>
+                          <td class="align-middle text-center">
+                            <span class="text-secondary text-xs font-weight-bold">dd/mm/yy</span>
+                          </td>
+                          <td class="align-middle">
+                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                              تعديل
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
-              </div>
-              <div class="card-body pt-4 p-3">
-                <h6 class="text-uppercase text-body text-xs font-weight-bolder mb-3">الاحدث</h6>
-                <ul class="list-group">
-                  <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                    <div class="d-flex align-items-center">
-                      <button class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-down"></i></button>
-                      <div class="d-flex flex-column">
-                        <h6 class="mb-1 text-dark text-sm">سحب</h6>
-                        <span class="text-xs">27 March 2020, at 12:30 PM</span>
-                      </div>
-                    </div>
-                    <div class="d-flex align-items-center text-danger text-gradient text-sm font-weight-bold">
-                      - $ 2,500
-                    </div>
-                  </li>
-                  <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                    <div class="d-flex align-items-center">
-                      <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-up"></i></button>
-                      <div class="d-flex flex-column">
-                        <h6 class="mb-1 text-dark text-sm">ايداع</h6>
-                        <span class="text-xs">27 March 2020, at 04:30 AM</span>
-                      </div>
-                    </div>
-                    <div class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold">
-                      + $ 2,000
-                    </div>
-                  </li>
-                </ul>
-                <h6 class="text-uppercase text-body text-xs font-weight-bolder my-3">امس</h6>
-                <ul class="list-group">
-                  <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                    <div class="d-flex align-items-center">
-                      <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-up"></i></button>
-                      <div class="d-flex flex-column">
-                        <h6 class="mb-1 text-dark text-sm">شراء</h6>
-                        <span class="text-xs">26 March 2020, at 13:45 PM</span>
-                      </div>
-                    </div>
-                    <div class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold">
-                      + $ 750
-                    </div>
-                  </li>
-                  <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                    <div class="d-flex align-items-center">
-                      <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-up"></i></button>
-                      <div class="d-flex flex-column">
-                        <h6 class="mb-1 text-dark text-sm">كشف حساب</h6>
-                        <span class="text-xs">26 March 2020, at 12:30 PM</span>
-                      </div>
-                    </div>
-                    <div class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold">
-                      + $ 1,000
-                    </div>
-                  </li>
-
-                  <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                    <div class="d-flex align-items-center">
-                      <button class="btn btn-icon-only btn-rounded btn-outline-dark mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-exclamation"></i></button>
-
-                    </div>
-                    <div class="d-flex align-items-center text-dark text-sm font-weight-bold">
-                      قيد الانتظار
-                    </div>
-                  </li>
-                </ul>
               </div>
             </div>
           </div>
@@ -355,20 +409,20 @@ if (!isset($_SESSION["sess_user"])) {
                     document.write(new Date().getFullYear())
                   </script>,
                   صمم بواسطه <i class="fa fa-heart"></i>
-                  <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">فريق رقم 79</a>
+                  <a href="#" class="font-weight-bold" target="_blank">فريق رقم 79</a>
 
                 </div>
               </div>
               <div class="col-lg-6">
                 <ul class="nav nav-footer justify-content-center justify-content-lg-end">
                   <li class="nav-item">
-                    <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">شركتنا</a>
+                    <a href="#" class="nav-link text-muted" target="_blank">شركتنا</a>
                   </li>
                   <li class="nav-item">
-                    <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">من نحن ؟</a>
+                    <a href="#/presentation" class="nav-link text-muted" target="_blank">من نحن ؟</a>
                   </li>
                   <li class="nav-item">
-                    <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">فريقنا</a>
+                    <a href="#/blog" class="nav-link text-muted" target="_blank">فريقنا</a>
                   </li>
 
                 </ul>
