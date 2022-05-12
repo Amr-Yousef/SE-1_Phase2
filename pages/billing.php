@@ -8,12 +8,6 @@ if (!isset($_SESSION["sess_user"])) {
   $sql = "SELECT * FROM creditcards WHERE SSN = '" . $_SESSION['sess_SSN'] . "'";
   $result = mysqli_query($conn, $sql);
   $row = mysqli_fetch_array($result);
-  // // $fname = $row['firstName'];
-  // // $lname = $row['lastName'];
-  // // $email = $row['email'];
-  // // $phone = $row['phoneNo'];
-  // // $country = $row['country'];
-  // // $balance = $row['monthlyIncome'];
   $CCN = $row['CCN'];
   $cvv = $row['CCV'];
   $balance = $row['Balance'];
@@ -248,18 +242,18 @@ if (!isset($_SESSION["sess_user"])) {
                             </div>
                           </td>
                           <td>
-                            <p class="text-xs font-weight-bold mb-0">آلي</p>
-                            <p class="text-xs text-secondary mb-0">معدل إنحراف عالي</p>
+                            <p class="text-xs font-weight-bold mb-0">1000ج.م.</p>
                           </td>
                           <td class="align-middle text-center text-sm">
                             <span class="badge badge-sm bg-gradient-success">تمت</span>
                           </td>
                           <td class="align-middle text-center">
-                            <span class="text-secondary text-xs font-weight-bold">dd/mm/yy</span>
+                            <p class="text-xs font-weight-bold mb-0">dd/mm/yy</p>
+                            <p class="text-xs text-secondary mb-0">@ hh:mm</p>
                           </td>
                           <td class="align-middle">
                             <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                              تعديل
+                              إبلاغ
                             </a>
                           </td>
                         </tr>
