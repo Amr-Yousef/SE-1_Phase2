@@ -42,17 +42,14 @@ class DBController
 
     public function selectAll($table, $key, $value)
     {
-        $qry = 'SELECT * FROM '.$table.' WHERE '.$key.' = '.$value.'';
-        $result = $this->connection->query($qry);
-        if (!$result) {
-            echo "Error : " . mysqli_error($this->connection);
-            return false;
-        } else {
-            while($row = $result->fetch_assoc()) {
-                $resultset[] = $row;
-            }
-            return $resultset;
-        }
+        // $resultArray = array();
+        // $sql = "SELECT * FROM'$table'WHERE '$key' = '$value'";
+        // $db = mysqli_connect("localhost","root","", "cc fraud detection");
+        // $result = mysqli_query($db, $sql);
+        // while ($row = mysqli_fetch_array($result)) {
+        //     $resultArray[] = new Transaction($row['ID'], $row['CCN'], $row['date'], $row['amount'], $row['type'], $row['description'], $row['location'], $row['status']);
+        // }
+        // return $resultArray;
     }
 
     public function insert($qry)
