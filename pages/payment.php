@@ -1,22 +1,55 @@
+<?php
+require_once '../classes/DBController.php';
+require_once '../classes/Cardholder.php';
+require_once '../classes/CreditCard.php';
+require_once '../classes/Person.php';
+require_once '../classes/AuthController.php';
+
+
+session_start();
+if (isset($_POST["next"])) {
+
+    if (!empty($_POST["CCN"]) && !empty($_POST["expDate"]) && !empty($_POST["CCV"]) && !empty($_POST["name"])) {
+
+        $CCN = str_replace(' ', '', $_POST["CCN"]);
+        $expDate = $_POST["expDate"];
+        $CCV = $_POST["CCV"];
+        $name = $_POST["name"];
+
+        $auth = new AuthController();
+        if ($auth->authCard($CCN, $CCV, $expDate)) {
+            echo "WOOOOOOOOOOOOOOOOOOOOOOOOHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO";
+        } else {
+            
+        }
+    } else {
+        echo "All fields are required!";
+    }
+} else if(isset($_POST["cancel"])) {
+    header("Location: billing.php");
+}
+?>
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>test</title>
-  <link href="https://fonts.googleapis.com/css?family=Raleway|Rock+Salt|Source+Code+Pro:300,400,600" rel="stylesheet"><link rel="stylesheet" href="../assets/css/payment.css">
+    <meta charset="UTF-8">
+    <title>test</title>
+    <link href="https://fonts.googleapis.com/css?family=Raleway|Rock+Salt|Source+Code+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/payment.css">
 
 </head>
+
 <body style="background: linear-gradient(to top right, #08aeea 0%, #b721ff 100%);">
-<!-- partial:index.partial.html -->
-<div class="payment-title">
+    <!-- partial:index.partial.html -->
+    <div class="payment-title">
         <h1 style="color: aliceblue;">Payment Information</h1>
     </div>
     <div class="container preload">
         <div class="creditcard">
             <div class="front">
                 <div id="ccsingle"></div>
-                <svg version="1.1" id="cardfront" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                    x="0px" y="0px" viewBox="0 0 750 471" style="enable-background:new 0 0 750 471;" xml:space="preserve">
+                <svg version="1.1" id="cardfront" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 750 471" style="enable-background:new 0 0 750 471;" xml:space="preserve">
                     <g id="Front">
                         <g id="CardBackground">
                             <g id="Page-1_1_">
@@ -77,8 +110,7 @@
                 </svg>
             </div>
             <div class="back">
-                <svg version="1.1" id="cardback" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                    x="0px" y="0px" viewBox="0 0 750 471" style="enable-background:new 0 0 750 471;" xml:space="preserve">
+                <svg version="1.1" id="cardback" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 750 471" style="enable-background:new 0 0 750 471;" xml:space="preserve">
                     <g id="Front">
                         <line class="st0" x1="35.3" y1="10.4" x2="36.7" y2="11" />
                     </g>
@@ -109,34 +141,37 @@
             </div>
         </div>
     </div>
-    <div class="form-container">
-        <div class="field-container">
-            <label for="name">Name</label>
-            <input id="name" maxlength="20" type="text">
-        </div>
-        <div class="field-container">
-            <label for="cardnumber">Card Number</label><span id="generatecard">generate random</span>
-            <input id="cardnumber" type="text" pattern="[0-9]*" inputmode="numeric">
-            <svg id="ccicon" class="ccicon" width="750" height="471" viewBox="0 0 750 471" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink">
+    <form method="POST" style="display: flex; align-content: center; align-items: center;">
+        <div class="form-container">
+            <div class="field-container">
+                <label for="name">Name</label>
+                <input id="name" maxlength="20" type="text" name="name">
+            </div>
+            <div class="field-container">
+                <label for="cardnumber">Card Number</label><span id="generatecard">generate random</span>
+                <input id="cardnumber" type="text" inputmode="numeric" name="CCN">
+                <svg id="ccicon" class="ccicon" width="750" height="471" viewBox="0 0 750 471" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
-            </svg>
+                </svg>
+            </div>
+            <div class="field-container">
+                <label for="expirationdate">Expiration (mm/yy)</label>
+                <input id="expirationdate" type="text" inputmode="numeric" name="expDate">
+            </div>
+            <div class="field-container">
+                <label for="securitycode">Security Code (CCV)</label>
+                <input id="securitycode" type="text" pattern="[0-9]*" inputmode="numeric" name="CCV">
+            </div>
         </div>
-        <div class="field-container">
-            <label for="expirationdate">Expiration (mm/yy)</label>
-            <input id="expirationdate" type="text" pattern="[0-9]*" inputmode="numeric">
+        <div style="display: flex; justify-content: space-between; margin: 2.5rem">
+            <a href="billing.php"><button class="btn btn--radius-2 btn--red" style="margin: 1rem; border: none;" type="submit" name="cancel">CANCEL</button></a>
+            <a href="#"><button class="btn btn--radius-2 btn--green" style="margin: 1rem; border: none;" type="submit" name="next">NEXT</button></a>
         </div>
-        <div class="field-container">
-            <label for="securitycode">Security Code (CCV)</label>
-            <input id="securitycode" type="text" pattern="[0-9]*" inputmode="numeric">
-        </div>
-    </div>
-    <div style="display: flex; justify-content: space-between; margin: 2.5rem">
-        <a href="billing.html"><button class="btn btn--radius-2 btn--red" style="margin: 1rem; border: none;" type="submit">CANCEL</button></a>
-        <a href="payment-form.html"><button class="btn btn--radius-2 btn--green" style="margin: 1rem; border: none;" type="submit">NEXT</button></a>
-    </div>
-<!-- partial -->
-  <script src='../assets/js/paymentp2.js'></script><script  src="../assets/js/payment.js"></script>
+    </form>
+    <!-- partial -->
+    <script src='../assets/js/paymentp2.js'></script>
+    <script src="../assets/js/payment.js"></script>
 
 </body>
+
 </html>

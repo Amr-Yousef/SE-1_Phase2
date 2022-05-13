@@ -1,8 +1,10 @@
 <?php
-include '../classes/Person.php';
-include '../classes/Cardholder.php';
-include '../classes/CreditCard.php';
-include '../classes/Transaction.php';
+    require_once '../classes/DBController.php';
+    require_once '../classes/Cardholder.php';
+    require_once '../classes/CreditCard.php';
+    require_once '../classes/Person.php';
+    require_once '../classes/AuthController.php';
+    require_once '../classes/Transaction.php';
 session_start();
 
 if (!isset($_SESSION["userOBJ"])) {
@@ -98,7 +100,7 @@ if (!isset($_SESSION["userOBJ"])) {
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link  " href="payment.html">
+            <a class="nav-link  " href="payment.php">
               <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg width="12px" height="20px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                   <title>spaceship</title>
