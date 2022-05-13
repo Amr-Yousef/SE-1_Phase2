@@ -74,6 +74,6 @@ class CreditCard
     
     public function getAllTransactions()
     {
-        return Transaction::getAllTransactions($this->getCCN());
+        return Transaction::getAllTransactions($this->CCN);
     }
 }

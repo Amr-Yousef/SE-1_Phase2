@@ -65,13 +65,15 @@ class Transaction
 
     public static function getAllTransactions($CCN)
     {
-        $transactions = array();
-        $sql = "SELECT * FROM transaction WHERE CCN = '$CCN'";
-        $db = mysqli_connect("localhost","root","", "cc fraud detection");
-        $result = mysqli_query($db, $sql);
-        while ($row = mysqli_fetch_array($result)) {
-            $transactions[] = new Transaction($row['ID'], $row['CCN'], $row['date'], $row['amount'], $row['type'], $row['description'], $row['location'], $row['status']);
-        }
-        return $transactions;
+        // $transactions = array();
+        // $sql = "SELECT * FROM transaction WHERE CCN = '$CCN'";
+        // $db = mysqli_connect("localhost","root","", "cc fraud detection");
+        // $result = mysqli_query($db, $sql);
+        // while ($row = mysqli_fetch_array($result)) {
+        //     $transactions[] = new Transaction($row['ID'], $row['CCN'], $row['date'], $row['amount'], $row['type'], $row['description'], $row['location'], $row['status']);
+        // }
+        // return $transactions;
+        $db = new DBController();
+        return $db->selectAll("transaction", "CCN", $CCN);
     }
 }

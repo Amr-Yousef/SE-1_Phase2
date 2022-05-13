@@ -29,8 +29,9 @@ class Cardholder extends Person
         // } else {
         //     return null;
         // }
+        //header("Location: http://google.com");
         $auth = new AuthController;
-        $_SESSION['user_obj'] = $auth->login($email, $password, 'cardholder');
+        $auth->login($email, $password, $table);
     }
 
     public function logout()

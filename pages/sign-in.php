@@ -36,12 +36,10 @@
     include('../classes/Cardholder.php');
     session_start();
     if (isset($_POST["submit"])) {
-        //header("Location: http://google.com");
         if (!empty($_POST['user']) && !empty($_POST['pass'])) {
             Cardholder::login($_POST['user'], $_POST['pass']);
-            if ($_SESSION['user_obj'] != null) {
+            if ($_SESSION['userOBJ'] != null) {
                 header("Location: billing.php");
-                //header("Location: http://google.com");
             } else {
                 echo "Invalid username or password!";
             }

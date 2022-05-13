@@ -5,10 +5,10 @@ include '../classes/CreditCard.php';
 include '../classes/Transaction.php';
 session_start();
 
-if (!isset($_SESSION["sess_user_obj"])) {
+if (!isset($_SESSION["userOBJ"])) {
   header("location:sign-in.php");
 } else {
-  $user = $_SESSION["sess_user_obj"];
+  $user = $_SESSION["userOBJ"];
   $card = $user->getCard();
   $CCN = $card->getCCN();
   $cvv = $card->getCVV();
@@ -142,7 +142,7 @@ if (!isset($_SESSION["sess_user_obj"])) {
               <li class="nav-item d-flex align-items-center">
                 <a href="profile.html" class="nav-link text-body font-weight-bold px-0">
                   <i class="fa fa-user me-sm-1"></i>
-                  <span class="d-sm-inline d-none">&nbsp;مرحبًا <?= $_SESSION['sess_user_obj']->getFirstName(); ?></span>
+                  <span class="d-sm-inline d-none">&nbsp;مرحبًا <?= $_SESSION['userOBJ']->getFirstName(); ?></span>
                 </a>
               </li>
             </ul>

@@ -40,6 +40,21 @@ class DBController
         }
     }
 
+    public function selectAll($table, $key, $value)
+    {
+        $qry = 'SELECT * FROM '.$table.' WHERE '.$key.' = '.$value.'';
+        $result = $this->connection->query($qry);
+        if (!$result) {
+            echo "Error : " . mysqli_error($this->connection);
+            return false;
+        } else {
+            while($row = $result->fetch_assoc()) {
+                $resultset[] = $row;
+            }
+            return $resultset;
+        }
+    }
+
     public function insert($qry)
     {
         $result = $this->connection->query($qry);
