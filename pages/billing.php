@@ -1,18 +1,20 @@
 <?php
+include '../classes/Person.php';
+include '../classes/Cardholder.php';
+include '../classes/CreditCard.php';
+include '../classes/Transaction.php';
 session_start();
-if (!isset($_SESSION["sess_user"])) {
+
+if (!isset($_SESSION["sess_user_obj"])) {
   header("location:sign-in.php");
 } else {
-  // fetching the data from the database
-  include('conn.php');
-  $sql = "SELECT * FROM creditcards WHERE SSN = '" . $_SESSION['sess_SSN'] . "'";
-  $result = mysqli_query($conn, $sql);
-  $row = mysqli_fetch_array($result);
-  $CCN = $row['CCN'];
-  $cvv = $row['CCV'];
-  $balance = $row['Balance'];
-  $cardName = $row['nameOnCard'];
-  $expDate = $row['expDate'];
+  $user = $_SESSION["sess_user_obj"];
+  $card = $user->getCard();
+  $CCN = $card->getCCN();
+  $cvv = $card->getCVV();
+  $balance = $card->getBalance();
+  $cardName = $card->getNameOnCard();
+  $expDate = $card->getExpDate();
 ?>
   <!DOCTYPE html>
   <html lang="ar" dir="rtl">
@@ -41,7 +43,7 @@ if (!isset($_SESSION["sess_user"])) {
     <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
       <div class="sidenav-header">
         <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-        <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.html " target="_blank">
+        <a class="navbar-brand m-0" href="#" target="_blank">
           <img src="../assets/img/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
           <span class="ms-1 font-weight-bold"></span>
         </a>
@@ -140,7 +142,7 @@ if (!isset($_SESSION["sess_user"])) {
               <li class="nav-item d-flex align-items-center">
                 <a href="profile.html" class="nav-link text-body font-weight-bold px-0">
                   <i class="fa fa-user me-sm-1"></i>
-                  <span class="d-sm-inline d-none">&nbsp;مرحبًا <?= $_SESSION['sess_user']; ?></span>
+                  <span class="d-sm-inline d-none">&nbsp;مرحبًا <?= $_SESSION['sess_user_obj']->getFirstName(); ?></span>
                 </a>
               </li>
             </ul>
@@ -231,7 +233,39 @@ if (!isset($_SESSION["sess_user"])) {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
+                        <?php
+                        $transactions = $card->getAllTransactions();
+                        foreach ($transactions as $transaction) {
+                          echo '
+                          <tr>
+                          <td>
+                            <div class="d-flex px-2 py-1">
+
+                              <div class="d-flex flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">'.$transaction->getDescription().'</h6>
+                                <p class="text-xs text-secondary mb-0">رمز#&nbsp;&nbsp;'.$transaction->getID().'</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0">'.$transaction->getAmount().'ج.م.</p>
+                          </td>
+                          <td class="align-middle text-center text-sm">
+                            <span class="badge badge-sm bg-gradient-success">تمت</span>
+                          </td>
+                          <td class="align-middle text-center">
+                            <p class="text-xs font-weight-bold mb-0">dd/mm/yy</p>
+                            <p class="text-xs text-secondary mb-0">@ hh:mm</p>
+                          </td>
+                          <td class="align-middle">
+                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                              إبلاغ
+                            </a>
+                          </td>
+                        </tr>';
+                        }
+                        ?>
+                        <!-- <tr>
                           <td>
                             <div class="d-flex px-2 py-1">
 
@@ -256,136 +290,7 @@ if (!isset($_SESSION["sess_user"])) {
                               إبلاغ
                             </a>
                           </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div class="d-flex px-2 py-1">
-
-                              <div class="d-flex flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">الإسم الثنائي</h6>
-                                <p class="text-xs text-secondary mb-0">آخر أربعة أرقام من البطاقة</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <p class="text-xs font-weight-bold mb-0">آلي</p>
-                            <p class="text-xs text-secondary mb-0">معدل إنحراف عالي</p>
-                          </td>
-                          <td class="align-middle text-center text-sm">
-                            <span class="badge badge-sm bg-gradient-secondary">معلقة</span>
-                          </td>
-                          <td class="align-middle text-center">
-                            <span class="text-secondary text-xs font-weight-bold">dd/mm/yy</span>
-                          </td>
-                          <td class="align-middle">
-                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                              تعديل
-                            </a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div class="d-flex px-2 py-1">
-
-                              <div class="d-flex flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">الإسم الثنائي</h6>
-                                <p class="text-xs text-secondary mb-0">آخر أربعة أرقام من البطاقة</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <p class="text-xs font-weight-bold mb-0">آلي</p>
-                            <p class="text-xs text-secondary mb-0">معدل إنحراف عالي</p>
-                          </td>
-                          <td class="align-middle text-center text-sm">
-                            <span class="badge badge-sm bg-gradient-blocked">حظرت</span>
-                          </td>
-                          <td class="align-middle text-center">
-                            <span class="text-secondary text-xs font-weight-bold">dd/mm/yy</span>
-                          </td>
-                          <td class="align-middle">
-                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                              تعديل
-                            </a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div class="d-flex px-2 py-1">
-
-                              <div class="d-flex flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">الإسم الثنائي</h6>
-                                <p class="text-xs text-secondary mb-0">آخر أربعة أرقام من البطاقة</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <p class="text-xs font-weight-bold mb-0">يدوي</p>
-                            <p class="text-xs text-secondary mb-0">معاملة خاطئة</p>
-                          </td>
-                          <td class="align-middle text-center text-sm">
-                            <span class="badge badge-sm bg-gradient-success">تمت</span>
-                          </td>
-                          <td class="align-middle text-center">
-                            <span class="text-secondary text-xs font-weight-bold">dd/mm/yy</span>
-                          </td>
-                          <td class="align-middle">
-                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                              تعديل
-                            </a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div class="d-flex px-2 py-1">
-
-                              <div class="d-flex flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">الإسم الثنائي</h6>
-                                <p class="text-xs text-secondary mb-0">آخر أربعة أرقام من البطاقة</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <p class="text-xs font-weight-bold mb-0">يدوي</p>
-                            <p class="text-xs text-secondary mb-0">معاملة احتيالية</p>
-                          </td>
-                          <td class="align-middle text-center text-sm">
-                            <span class="badge badge-sm bg-gradient-secondary">معلقة</span>
-                          </td>
-                          <td class="align-middle text-center">
-                            <span class="text-secondary text-xs font-weight-bold">dd/mm/yy</span>
-                          </td>
-                          <td class="align-middle">
-                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                              تعديل
-                            </a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div class="d-flex px-2 py-1">
-                              <div class="d-flex flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">الإسم الثنائي</h6>
-                                <p class="text-xs text-secondary mb-0">آخر أربعة أرقام من البطاقة</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <p class="text-xs font-weight-bold mb-0">يدوي</p>
-                            <p class="text-xs text-secondary mb-0">معاملة متكررة</p>
-                          </td>
-                          <td class="align-middle text-center text-sm">
-                            <span class="badge badge-sm bg-gradient-blocked">حظرت</span>
-                          </td>
-                          <td class="align-middle text-center">
-                            <span class="text-secondary text-xs font-weight-bold">dd/mm/yy</span>
-                          </td>
-                          <td class="align-middle">
-                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                              تعديل
-                            </a>
-                          </td>
-                        </tr>
+                        </tr> -->
                       </tbody>
                     </table>
                   </div>

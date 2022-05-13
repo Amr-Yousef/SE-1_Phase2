@@ -1,35 +1,54 @@
-<?php
-if (isset($_POST["submit"])) {
+<!-- <?php
+// if (isset($_POST["submit"])) {
 
-    if (!empty($_POST['user']) && !empty($_POST['pass'])) {
-        $user = $_POST['user'];
-        $pass = $_POST['pass'];
+//     if (!empty($_POST['user']) && !empty($_POST['pass'])) {
+//         $user = $_POST['user'];
+//         $pass = $_POST['pass'];
 
-        include('conn.php');
+//         include('conn.php');
 
-        $query = mysqli_query($conn, "SELECT * FROM cardholder WHERE email='" . $user . "' AND password='" . $pass . "'");
-        $numrows = mysqli_num_rows($query);
-        if ($numrows != 0) {
-            while ($row = mysqli_fetch_assoc($query)) {
-                $dbusername = $row['email'];
-                $dbpassword = $row['password'];
-                $dbname = $row['firstName'];
-                $dbSSN = $row['SSN'];
-            }
+//         $query = mysqli_query($conn, "SELECT * FROM cardholder WHERE email='" . $user . "' AND password='" . $pass . "'");
+//         $numrows = mysqli_num_rows($query);
+//         if ($numrows != 0) {
+//             while ($row = mysqli_fetch_assoc($query)) {
+//                 $dbusername = $row['email'];
+//                 $dbpassword = $row['password'];
+//                 $dbname = $row['firstName'];
+//                 $dbSSN = $row['SSN'];
+//             }
 
-            if ($user == $dbusername && $pass == $dbpassword) {
-                session_start();
-                $_SESSION['sess_user'] = $dbname;
-                $_SESSION['sess_SSN'] = $dbSSN;
+//             if ($user == $dbusername && $pass == $dbpassword) {
+//                 session_start();
+//                 $_SESSION['sess_user'] = $dbname;
+//                 $_SESSION['sess_SSN'] = $dbSSN;
+//                 header("Location: billing.php");
+//             }
+//         } else {
+//             echo "Invalid username or password!";
+//         }
+//     } else {
+//         echo "All fields are required!";
+//     }
+// }
+?> -->
+<?php 
+    include('../classes/Person.php');
+    include('../classes/Cardholder.php');
+    session_start();
+    if (isset($_POST["submit"])) {
+        //header("Location: http://google.com");
+        if (!empty($_POST['user']) && !empty($_POST['pass'])) {
+            Cardholder::login($_POST['user'], $_POST['pass']);
+            if ($_SESSION['user_obj'] != null) {
                 header("Location: billing.php");
+                //header("Location: http://google.com");
+            } else {
+                echo "Invalid username or password!";
             }
         } else {
-            echo "Invalid username or password!";
+            echo "All fields are required!";
         }
-    } else {
-        echo "All fields are required!";
     }
-}
 ?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
