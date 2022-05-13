@@ -1,5 +1,9 @@
 <?php
-
+require_once '../classes/DBController.php';
+require_once '../classes/Cardholder.php';
+require_once '../classes/CreditCard.php';
+require_once '../classes/Person.php';
+require_once '../classes/AuthController.php';
 class Transaction
 {
     private $ID;

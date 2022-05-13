@@ -59,7 +59,7 @@ class DBController
             echo "Error : " . mysqli_error($this->connection);
             return false;
         } else {
-            return $this->connection->insert_id;
+            return true;
         }
     }
 

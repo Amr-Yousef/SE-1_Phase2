@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
 
 <head>
     <!-- Required meta tags-->
@@ -11,7 +10,8 @@
 
     <!-- Font special for pages -->
     <!-- NOTE: DOWNLOAD THE FONTS LATER FOR OFFLINE USE -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"
+        rel="stylesheet">
 
     <!-- Main CSS-->
     <link href="../assets/css/payment-form.css" rel="stylesheet" media="all">
@@ -25,12 +25,12 @@
                     <h2 class="title">Payment Cont.</h2>
                 </div>
                 <div class="card-body">
-                    <form method="POST">
+                    <form method="POST" action="paymentFormProcessing.php">
                         <div class="form-row">
                             <div class="name">Item Desc.</div>
                             <div class="value">
                                 <div class="input-group">
-                                    <input class="input--style-5" type="text" name="website">
+                                    <input class="input--style-5" type="text" name="item_desc">
                                 </div>
                             </div>
                         </div>
@@ -40,13 +40,13 @@
                                 <div class="row row-space">
                                     <div class="col-2">
                                         <div class="input-group-desc">
-                                            <input class="input--style-5" type="text" name="first_name">
+                                            <input class="input--style-5" type="text" name="totalPrice">
                                             <label class="label--desc">Total Price ($)</label>
                                         </div>
                                     </div>
                                     <div class="col-2">
                                         <div class="input-group-desc">
-                                            <input class="input--style-5" type="text" name="last_name">
+                                            <input class="input--style-5" type="text" name="quantity">
                                             <label class="label--desc">Quantity</label>
                                         </div>
                                     </div>
@@ -124,8 +124,9 @@
                             </div>
                         </div>
                         <div style="display: flex; justify-content: space-between;">
-                            <a href="billing.html"><button class="btn btn--radius-2 btn--red" type="button">CANCEL</button></a>
-                            <button class="btn btn--radius-2 btn--green" type="submit">PAY</button>
+                            <a href="billing.html"><button class="btn btn--radius-2 btn--red"
+                                    type="button">CANCEL</button></a>
+                            <button class="btn btn--radius-2 btn--green" type="submit" name="pay">PAY</button>
                         </div>
                     </form>
                 </div>

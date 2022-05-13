@@ -81,13 +81,37 @@ class AuthController
                     }
                     else
                     {
-                        echo "You have entered correct credit card number and CVV";
+                        
                         $this->db->closeConnection();
                         return true;
                     }
                     $this->db->closeConnection();
                     return true;
                 }
+            }
+        }
+        else
+        {
+            echo "Error in Database Connection";
+            return false;
+        }
+    }
+    public function paymentFormInsertToDB($CCN, $date, $total, $quantity, $website, $description, $type, $country,$city,$phoneNo,$status)
+    {
+        $this->db=new DBController;
+        if($this->db->openConnection())
+        {
+            $query="insert into transaction( CCN,date, total, quantity, website, description, type, country, city, phoneNo, status) values( '$CCN','$date', '$total', '$quantity', '$website', '$description', '$type', '$country','$city','$phoneNo','$status')";
+            $result=$this->db->insert($query);
+            if($result===false)
+            {
+                echo "Error in Query";
+                return false;
+            }
+            else
+            {
+                $this->db->closeConnection();
+                return true;
             }
         }
         else
