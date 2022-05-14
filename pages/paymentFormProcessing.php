@@ -7,7 +7,11 @@ require_once '../classes/AuthController.php';
 require_once '../classes/Transaction.php';
 include '../classes/phpmailer.php';
 session_start();
-if (isset($_POST['pay'])) {
+$user = $_SESSION["userOBJ"];
+$card = $user->getCard();
+$balance = $card->getBalance();
+
+        if (isset($_POST['pay'])) {
 
     if (
         !empty($_POST['item_desc'])
@@ -35,7 +39,6 @@ if (isset($_POST['pay'])) {
         $city = $_POST['city'];
         $phoneNo = $area_code . $phone;
         $CCN = $_SESSION['ccn'];
-        echo $CCN;
         $transaction = new Transaction(
             $ID,
             $CCN,
@@ -50,9 +53,13 @@ if (isset($_POST['pay'])) {
             $phoneNo,
             $status
         );
-
+        
         $auth = new AuthController();
-        if ($auth->paymentFormInsertToDB(
+        if ($balance - $transaction->getTotal() < 0) {
+        echo "<script>alert('Insufficient Balance Charge your account')</script>";
+            // header("Location: ../pages/billing.php");
+        } 
+        else if ($auth->paymentFormInsertToDB(
             $transaction->getCCN(),
             $transaction->getDate(),
             $transaction->getTotal(),
@@ -65,6 +72,7 @@ if (isset($_POST['pay'])) {
             $transaction->getPhoneNo(),
             $transaction->getStatus()
         )) {
+            $auth->updateBalance($transaction->getCCN(), $balance - $transaction->getTotal());
             sendMail(
                 $transaction->getCCN(),
                 $transaction->getDate(),

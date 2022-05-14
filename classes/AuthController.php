@@ -120,6 +120,54 @@ class AuthController
             return false;
         }
     }
+    public function updateBalance($CCN,$newBalance)
+    {
+        $this->db=new DBController;
+        if($this->db->openConnection())
+        {
+            $query="update creditcards set Balance='$newBalance' where CCN='$CCN'";
+            $result=$this->db->update($query);
+            if($result===false)
+            {
+                echo "Error in Query";
+                return false;
+            }
+            else
+            {
+                $this->db->closeConnection();
+                return true;
+            }
+        }
+        else
+        {
+            echo "Error in Database Connection";
+            return false;
+        }
+    }
+    public function getBalance($CCN)
+    {
+        $this->db=new DBController;
+        if($this->db->openConnection())
+        {
+            $query="select Balance from creditcards where CCN='$CCN'";
+            $result=$this->db->select($query);
+            if($result===false)
+            {
+                echo "Error in Query";
+                return false;
+            }
+            else
+            {
+                $this->db->closeConnection();
+                return $result[0]["Balance"];
+            }
+        }
+        else
+        {
+            echo "Error in Database Connection";
+            return false;
+        }
+    }
     public function reportInsertToDB($ID,$CCN, $Name,$date,   $status,$reason)
     {
         $this->db = new DBController;

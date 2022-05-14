@@ -48,7 +48,32 @@ $ and
     //send the message, check for errors
     if (!$mail->send()) {
         echo "ERROR: " . $mail->ErrorInfo;
-    } else {
-        echo "SUCCESS";
+    } 
+}
+function sendMailTransfer(
+    $AccNoOfTheOneWhoTransfer,
+    $AccNoOfTheOneWhoReceive,
+    $date,
+    $oldBalance,
+    $newBalance,
+    $amountTranfered
+    
+) {
+    echo "<script>alert('Your payment is successfully check your Email');</script>";
+    $mail = new PHPMailer;
+    $mail->isSMTP();
+    $mail->SMTPSecure = 'ssl';
+    $mail->SMTPAuth = true;
+    $mail->Host = 'smtp.gmail.com';
+    $mail->Port = 465;
+    $mail->Username = 'ahmedhisham392002@gmail.com';
+    $mail->Password = 'Ahmed_3920';
+    $mail->setFrom('ahmedhisham392002@gmail.com');
+    $mail->addAddress('ahisham819@gmail.com');
+    $mail->Subject = 'CC Transaction System - New Transaction';
+    $mail->Body = 'There is a transfer operation done by the card number:'.$AccNoOfTheOneWhoTransfer.', on '.$date.', to your account :'.$AccNoOfTheOneWhoReceive.', the amount transfered is :'.$amountTranfered.', then your old balance was :'.$oldBalance.', to your new balance is :'.$newBalance;
+    //send the message, check for errors
+    if (!$mail->send()) {
+        echo "ERROR: " . $mail->ErrorInfo;
     }
 }

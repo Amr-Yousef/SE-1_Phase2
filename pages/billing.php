@@ -8,15 +8,15 @@ require_once '../classes/Transaction.php';
 session_start();
 
 if (!isset($_SESSION["userOBJ"])) {
-  header("location:sign-in.php");
+    header("location:sign-in.php");
 } else {
-  $user = $_SESSION["userOBJ"];
-  $card = $user->getCard();
-  $CCN = $card->getCCN();
-  $cvv = $card->getCVV();
-  $balance = $card->getBalance();
-  $cardName = $card->getNameOnCard();
-  $expDate = $card->getExpDate();
+    $user = $_SESSION["userOBJ"];
+    $card = $user->getCard();
+    $CCN = $card->getCCN();
+    $cvv = $card->getCVV();
+    $balance = $card->getBalance();
+    $cardName = $card->getNameOnCard();
+    $expDate = $card->getExpDate();
 ?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -205,9 +205,9 @@ if (!isset($_SESSION["userOBJ"])) {
                                         <h5 class="text-white mt-4 mb-5 pb-2">
                                             <!-- 4562&nbsp;&nbsp;&nbsp;1122&nbsp;&nbsp;&nbsp;4594&nbsp;&nbsp;&nbsp;7852 -->
                                             <?php
-                        $str = chunk_split($CCN, 4, '&nbsp;&nbsp;&nbsp;&nbsp;');
-                        echo $str;
-                        ?>
+                                                $str = chunk_split($CCN, 4, '&nbsp;&nbsp;&nbsp;&nbsp;');
+                                                echo $str;
+                                                ?>
                                         </h5>
                                         <div class="d-flex">
                                             <div class="d-flex">
@@ -287,44 +287,57 @@ if (!isset($_SESSION["userOBJ"])) {
                                         </thead>
                                         <tbody>
                                             <?php
-                                              
 
 
-                        $transactions = $card->getAllTransactions();
-                        foreach($transactions as $transaction){
-                            if(isset($_POST[strval($transaction->getID())]))
-                            {
-                                $auth=new AuthController;
-                                $auth->reportInsertToDB($transaction->getID(),$CCN,$cardName,date("Y-m-d"),0,"الي");
-                                                    echo "<script>alert('REPORT DONE SUCCESSFULLY');</script>";
-                                            break;
-                            }
-                        }
-                        foreach ($transactions as $transaction) {
-                          $iterator = 0;
-                        ?>
+
+                                                $transactions = $card->getAllTransactions();
+                                                foreach ($transactions as $transaction) {
+                                                    if (isset($_POST[strval($transaction->getID())])) {
+                                                        include('conn.php');
+                                                        $query = mysqli_query($conn, "SELECT ID FROM report WHERE ID = '".$transaction->getID()."'");
+                                                        $numrows = mysqli_num_rows($query);
+                                                        if ($numrows === 0) {
+                                                        $auth = new AuthController;
+                                                        $auth->reportInsertToDB($transaction->getID(), $CCN, $cardName, date("Y-m-d"), 0, "الي");
+                                                        echo "<script>alert('REPORT DONE SUCCESSFULLY');</script>";
+                                                        break; 
+                                                        }
+                                                        else{
+                                                            echo "<script>alert('REPORT ALREADY EXIST');</script>";
+                                                            break;
+                                                        }
+                                                        
+                                                    }
+                                                }
+                                                foreach ($transactions as $transaction) {
+                                                    $iterator = 0;
+                                                ?>
                                             <tr>
                                                 <td>
                                                     <div class="d-flex px-2 py-1">
 
                                                         <div class="d-flex flex-column justify-content-center">
                                                             <h6 class="mb-0 text-sm"><?= $transaction->getDescription()
-                                                            ?></h6>
-                                                            <p class="text-xs text-secondary mb-0">رمز#&nbsp;&nbsp;<?=
-                                                                                          $transaction->getID() ?></p>
+                                                                                                ?></h6>
+                                                            <p class="text-xs text-secondary mb-0">
+                                                                رمز#&nbsp;&nbsp;<?=
+                                                                                                                            $transaction->getID() ?>
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <p class="text-xs font-weight-bold mb-0">'<?=
-                                                                        $transaction->getTotal() ?> ج.م.</p>
+                                                    <p class="text-xs font-weight-bold mb-0">
+                                                        '<?=
+                                                                                                        $transaction->getTotal() ?>
+                                                        ج.م.</p>
                                                 </td>
                                                 <td class="align-middle text-center text-sm">
                                                     <span class="badge badge-sm bg-gradient-success">تمت</span>
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     <p class="text-xs font-weight-bold mb-0"><?= $transaction->getDate()
-                                                                        ?></p>
+                                                                                                        ?></p>
                                                 </td>
                                                 <td class="align-middle">
                                                     <form method="post">
@@ -337,8 +350,8 @@ if (!isset($_SESSION["userOBJ"])) {
                                                 </td>
                                             </tr>'
                                             <?php
-                        }
-                        ?>
+                                                }
+                                                ?>
                                             <!-- <tr>
                           <td>
                             <div class="d-flex px-2 py-1">
@@ -438,8 +451,8 @@ if (!isset($_SESSION["userOBJ"])) {
 
                     <div class="input-group mb-3">
                         <input type="text" name="search" required value="<?php if (isset($_GET['search'])) {
-                                                                            echo $_GET['search'];
-                                                                          } ?>" class="form-control" placeholder="Search data">
+                                                                                echo $_GET['search'];
+                                                                            } ?>" class="form-control" placeholder="Search data">
                         <button type="submit" class="btn btn-primary">Search</button>
                     </div>
                 </form>
@@ -472,12 +485,12 @@ if (!isset($_SESSION["userOBJ"])) {
                                 $db = mysqli_connect("localhost", "root", "", "cc fraud detection");
 
                                 if (isset($_GET['search'])) {
-                                  $filtervalues = $_GET['search'];
-                                  $query = "SELECT * FROM transaction WHERE CONCAT(ID,CCN,date,total,quantity,website,description,type,country,city,phoneNo,status) LIKE '%$filtervalues%' ";
-                                  $query_run = mysqli_query($db, $query);
+                                    $filtervalues = $_GET['search'];
+                                    $query = "SELECT * FROM transaction WHERE CONCAT(ID,CCN,date,total,quantity,website,description,type,country,city,phoneNo,status) LIKE '%$filtervalues%' ";
+                                    $query_run = mysqli_query($db, $query);
 
-                                  if (mysqli_num_rows($query_run) > 0) {
-                                    foreach ($query_run as $items) {
+                                    if (mysqli_num_rows($query_run) > 0) {
+                                        foreach ($query_run as $items) {
                                 ?>
                                 <tr>
                                     <td><?= $items['ID']; ?></td>
@@ -494,14 +507,14 @@ if (!isset($_SESSION["userOBJ"])) {
                                     <td><?= $items['status']; ?></td>
                                 </tr>
                                 <?php
-                                    }
-                                  } else {
+                                        }
+                                    } else {
                                 ?>
                                 <tr>
                                     <td colspan="4">No Record Found</td>
                                 </tr>
                                 <?php
-                                  }
+                                    }
                                 }
                                 ?>
 
