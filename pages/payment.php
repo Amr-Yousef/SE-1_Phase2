@@ -20,7 +20,7 @@
             if ($auth->authCard($CCN, $CCV, $expDate)) {
                 $_SESSION['ccn']=$CCN;
                 // $_SESSION['CCV']=$CCV;
-                header("Location: payment-form.php");
+                header("Location: payment-form.html");
             } else {
                 echo "Invalid Card";
             }

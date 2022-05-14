@@ -1,10 +1,10 @@
 <?php
-    require_once '../classes/DBController.php';
-    require_once '../classes/Cardholder.php';
-    require_once '../classes/CreditCard.php';
-    require_once '../classes/Person.php';
-    require_once '../classes/AuthController.php';
-    require_once '../classes/Transaction.php';
+require_once '../classes/DBController.php';
+require_once '../classes/Cardholder.php';
+require_once '../classes/CreditCard.php';
+require_once '../classes/Person.php';
+require_once '../classes/AuthController.php';
+require_once '../classes/Transaction.php';
 session_start();
 
 if (!isset($_SESSION["userOBJ"])) {
@@ -39,6 +39,13 @@ if (!isset($_SESSION["userOBJ"])) {
     <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
     <!-- CSS Files -->
     <link id="pagestyle" href="../assets/css/soft-ui-dashboard-rtl.css?v=1.0.6" rel="stylesheet" />
+    <!-- Bootstrap CSS
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script> -->
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -88,7 +95,7 @@ if (!isset($_SESSION["userOBJ"])) {
                     <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">عمليات أخرى</h6>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="transfer-form.html">
+                    <a class="nav-link  " href="transfer-form.php">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1"
@@ -280,35 +287,47 @@ if (!isset($_SESSION["userOBJ"])) {
                                         </thead>
                                         <tbody>
                                             <?php
+                                              
+
+
                         $transactions = $card->getAllTransactions();
                         foreach ($transactions as $transaction) {
-                          echo '
-                          <tr>
-                          <td>
-                            <div class="d-flex px-2 py-1">
+                          $iterator = 0;
+                        ?>
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex px-2 py-1">
 
-                              <div class="d-flex flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">'.$transaction->getDescription().'</h6>
-                                <p class="text-xs text-secondary mb-0">رمز#&nbsp;&nbsp;'.$transaction->getID().'</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <p class="text-xs font-weight-bold mb-0">'.$transaction->getTotal().'ج.م.</p>
-                          </td>
-                          <td class="align-middle text-center text-sm">
-                            <span class="badge badge-sm bg-gradient-success">تمت</span>
-                          </td>
-                          <td class="align-middle text-center">
-                            <p class="text-xs font-weight-bold mb-0">dd/mm/yy</p>
-                            <p class="text-xs text-secondary mb-0">@ hh:mm</p>
-                          </td>
-                          <td class="align-middle">
-                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                              إبلاغ
-                            </a>
-                          </td>
-                        </tr>';
+                                                        <div class="d-flex flex-column justify-content-center">
+                                                            <h6 class="mb-0 text-sm"><?= $transaction->getDescription()
+                                                            ?></h6>
+                                                            <p class="text-xs text-secondary mb-0">رمز#&nbsp;&nbsp;<?=
+                                                                                          $transaction->getID() ?></p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">'<?=
+                                                                        $transaction->getTotal() ?> ج.م.</p>
+                                                </td>
+                                                <td class="align-middle text-center text-sm">
+                                                    <span class="badge badge-sm bg-gradient-success">تمت</span>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    <p class="text-xs font-weight-bold mb-0"><?= $transaction->getDate()
+                                                                        ?></p>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <form method="post">
+                                                        <button class="text-secondary font-weight-bold text-xs"
+                                                            data-toggle="tooltip" data-original-title="Edit user"
+                                                            type="submit" name="<?= $transaction->getID() ?>">
+                                                            إبلاغ
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>'
+                                            <?php
                         }
                         ?>
                                             <!-- <tr>
@@ -395,6 +414,96 @@ if (!isset($_SESSION["userOBJ"])) {
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="../assets/js/soft-ui-dashboard.min.js?v=1.0.5"></script>
+    <!-- <div style="    margin-top: 50rem; ">
+        <div class="col-sm-10 bg-light">
+            <div class="row">
+                <div class="col-sm-2">
+                </div>
+
+                <div class="col-sm-8">
+                    <h1 class="text-center pt-4 pb-5"><strong>Search Patient details</strong></h1>
+                    <hr class="w-25 mx-auto">
+                </div>
+
+                <form action="" method="GET">
+
+                    <div class="input-group mb-3">
+                        <input type="text" name="search" required value="<?php if (isset($_GET['search'])) {
+                                                                            echo $_GET['search'];
+                                                                          } ?>" class="form-control" placeholder="Search data">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="container-fluid pt-5 pb-5 bg-light">
+                <div class="container width ">
+                    <hr class="border-bottom bg-success w-50 mx-auto">
+                    <div class="table table-responsive">
+                        <table class="table table-striped w-z0 table-bordered">
+                            <thead class="table-primary">
+                                <tr>
+
+                                    <th class="text-left">ID</th>
+                                    <th class="text-left">first name</th>
+                                    <th class="text-left">last name</th>
+                                    <th class="text-left">Age</th>
+                                    <th class="text-left">Address</th>
+                                    <th class="text-left">Data of Arrival</th>
+                                    <th class="text-left">Gender</th>
+                                    <th class="text-left">Cost</th>
+                                    <th class="text-left">Phone_no</th>
+
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <?php
+                                $db = mysqli_connect("localhost", "root", "", "cc fraud detection");
+
+                                if (isset($_GET['search'])) {
+                                  $filtervalues = $_GET['search'];
+                                  $query = "SELECT * FROM transaction WHERE CONCAT(ID,CCN,date,total,quantity,website,description,type,country,city,phoneNo,status) LIKE '%$filtervalues%' ";
+                                  $query_run = mysqli_query($db, $query);
+
+                                  if (mysqli_num_rows($query_run) > 0) {
+                                    foreach ($query_run as $items) {
+                                ?>
+                                <tr>
+                                    <td><?= $items['ID']; ?></td>
+                                    <td><?= $items['CCN']; ?></td>
+                                    <td><?= $items['date']; ?></td>
+                                    <td><?= $items['total']; ?></td>
+                                    <td><?= $items['quantity']; ?></td>
+                                    <td><?= $items['website']; ?></td>
+                                    <td><?= $items['description']; ?></td>
+                                    <td><?= $items['type']; ?></td>
+                                    <td><?= $items['country']; ?></td>
+                                    <td><?= $items['city']; ?></td>
+                                    <td><?= $items['phoneNo']; ?></td>
+                                    <td><?= $items['status']; ?></td>
+                                </tr>
+                                <?php
+                                    }
+                                  } else {
+                                ?>
+                                <tr>
+                                    <td colspan="4">No Record Found</td>
+                                </tr>
+                                <?php
+                                  }
+                                }
+                                ?>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
 </body>
 
 </html>

@@ -5,7 +5,7 @@ require_once '../classes/CreditCard.php';
 require_once '../classes/Person.php';
 require_once '../classes/AuthController.php';
 require_once '../classes/Transaction.php';
-
+include '../classes/phpmailer.php';
 session_start();
 if (isset($_POST['pay'])) {
 
@@ -52,7 +52,7 @@ if (isset($_POST['pay'])) {
         );
 
         $auth = new AuthController();
-       if( $auth->paymentFormInsertToDB(
+        if ($auth->paymentFormInsertToDB(
             $transaction->getCCN(),
             $transaction->getDate(),
             $transaction->getTotal(),
@@ -64,11 +64,24 @@ if (isset($_POST['pay'])) {
             $transaction->getCity(),
             $transaction->getPhoneNo(),
             $transaction->getStatus()
-        )){
+        )) {
+            sendMail(
+                $transaction->getCCN(),
+                $transaction->getDate(),
+                $transaction->getTotal(),
+                $transaction->getQuantity(),
+                $transaction->getWebsite(),
+                $transaction->getDescription(),
+                $transaction->getType(),
+                $transaction->getCountry(),
+                $transaction->getCity(),
+                $transaction->getPhoneNo(),
+                $transaction->getStatus()
+            );
+            
             header("Location: ../pages/billing.php");
         }
-        //$transaction->sendEmail($email);
-        echo "Payment Successful!";
+
     } else {
         echo "All fields are required!";
     }
