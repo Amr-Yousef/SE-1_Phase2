@@ -120,5 +120,23 @@ class AuthController
             return false;
         }
     }
+    public function reportInsertToDB($ID,$CCN, $Name,$date,   $status,$reason)
+    {
+        $this->db = new DBController;
+        if ($this->db->openConnection()) {
+            $query = "insert into report( ID,CCN, Name,date,status,reason) values('$ID','$CCN', '$Name','$date',   '$status','$reason')";
+            $result = $this->db->insert($query);
+            if ($result === false) {
+                echo "Error in Query";
+                return false;
+            } else {
+                $this->db->closeConnection();
+                return true;
+            }
+        } else {
+            echo "Error in Database Connection";
+            return false;
+        }
+    }
 }
 ?>
