@@ -291,6 +291,15 @@ if (!isset($_SESSION["userOBJ"])) {
 
 
                         $transactions = $card->getAllTransactions();
+                        foreach($transactions as $transaction){
+                            if(isset($_POST[strval($transaction->getID())]))
+                            {
+                                $auth=new AuthController;
+                                $auth->reportInsertToDB($transaction->getID(),$CCN,$cardName,date("Y-m-d"),0,"الي");
+                                                    echo "<script>alert('REPORT DONE SUCCESSFULLY');</script>";
+                                            break;
+                            }
+                        }
                         foreach ($transactions as $transaction) {
                           $iterator = 0;
                         ?>
