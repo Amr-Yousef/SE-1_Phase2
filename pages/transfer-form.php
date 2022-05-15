@@ -63,7 +63,7 @@ if (isset($_POST['transfer'])) {
 </head>
 
 <body>
-    <div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
+    <div class="page-wrapper p-t-45 p-b-50" style="background-color: #f8f9fa;">
         <div class="wrapper wrapper--w790">
             <div class="card card-5">
                 <div class="card-heading">
@@ -84,6 +84,19 @@ if (isset($_POST['transfer'])) {
                             <div class="value">
                                 <div class="input-group">
                                     <input class="input--style-5" type="text" name="trans" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Price</div>
+                            <div class="value">
+                                <div class="row row-space">
+                                    <div class="col-2">
+                                        <div class="input-group-desc">
+                                            <input class="input--style-5" type="text" name="totalPrice">
+                                            <label class="label--desc">Total Price ($)</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
