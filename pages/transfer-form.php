@@ -88,13 +88,13 @@ if (isset($_POST['transfer'])) {
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="name">Price</div>
+                            <div class="name">Amount</div>
                             <div class="value">
                                 <div class="row row-space">
                                     <div class="col-2">
                                         <div class="input-group-desc">
                                             <input class="input--style-5" type="text" name="totalPrice">
-                                            <label class="label--desc">Total Price ($)</label>
+                                            <label class="label--desc">Total Amount ($)</label>
                                         </div>
                                     </div>
                                 </div>

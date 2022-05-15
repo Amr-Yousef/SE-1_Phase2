@@ -1,54 +1,28 @@
-<!-- <?php
-// if (isset($_POST["submit"])) {
-
-//     if (!empty($_POST['user']) && !empty($_POST['pass'])) {
-//         $user = $_POST['user'];
-//         $pass = $_POST['pass'];
-
-//         include('conn.php');
-
-//         $query = mysqli_query($conn, "SELECT * FROM cardholder WHERE email='" . $user . "' AND password='" . $pass . "'");
-//         $numrows = mysqli_num_rows($query);
-//         if ($numrows != 0) {
-//             while ($row = mysqli_fetch_assoc($query)) {
-//                 $dbusername = $row['email'];
-//                 $dbpassword = $row['password'];
-//                 $dbname = $row['firstName'];
-//                 $dbSSN = $row['SSN'];
-//             }
-
-//             if ($user == $dbusername && $pass == $dbpassword) {
-//                 session_start();
-//                 $_SESSION['sess_user'] = $dbname;
-//                 $_SESSION['sess_SSN'] = $dbSSN;
-//                 header("Location: billing.php");
-//             }
-//         } else {
-//             echo "Invalid username or password!";
-//         }
-//     } else {
-//         echo "All fields are required!";
-//     }
-// }
-?> -->
 <?php 
     include('../classes/Person.php');
     include('../classes/Cardholder.php');
+    include('../classes/Admin.php');
     session_start();
     if (isset($_POST["submit"])) {
         if (!empty($_POST['user']) && !empty($_POST['pass'])) {
             Cardholder::login($_POST['user'], $_POST['pass']);
-            if ($_SESSION['userOBJ'] != null) {
-                // echo $_SESSION['userOBJ']->getFirstName();
+            Admin::login($_POST['user'], $_POST['pass']);
+            if ($_SESSION['userOBJ'] != null && $_SESSION['userOBJ']->isAdmin()) {
+
+                header("Location: reports.php");
+
+            } else if($_SESSION['userOBJ'] != null && !$_SESSION['userOBJ']->isAdmin()) {
                 header("Location: billing.php");
-                // header("Location: https://google.com");
             } else {
+                echo "Invalid username or password";
+            }
+
+            }else {
                 echo "Invalid username or password!";
             }
         } else {
             echo "All fields are required!";
         }
-    }
 ?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">

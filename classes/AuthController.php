@@ -38,6 +38,14 @@ class AuthController
                         $this->db->closeConnection();
                         $_SESSION['userOBJ'] = $cardholder;
                     }
+
+                    else if($table == 'admin')
+                    {
+                        $admin = new Admin($result[0]["email"], $result[0]["password"]);
+                        $this->db->closeConnection();
+                        $_SESSION['userOBJ'] = $admin;
+                    }
+
                     $this->db->closeConnection();
                     return true;
                 }

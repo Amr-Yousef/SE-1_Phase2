@@ -41,13 +41,12 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway|Rock+Salt|Source+Code+Pro:300,400,600"
             rel="stylesheet">
         <link rel="stylesheet" href="../assets/css/payment.css">
-
     </head>
 
-    <body style="background: linear-gradient(to top right, #08aeea 0%, #b721ff 100%);">
+    <body style="background: #f8f9fa;">
         <!-- partial:index.partial.html -->
         <div class="payment-title">
-            <h1 style="color: aliceblue;">Payment Information</h1>
+            <h1>Payment Information</h1>
         </div>
         <div class="container preload">
             <div class="creditcard">
@@ -163,11 +162,11 @@
         <form method="POST" style="display: flex; align-content: center; align-items: center;">
             <div class="form-container">
                 <div class="field-container">
-                    <label for="name">Name</label>
+                    <label for="name" style="color: #2b2b2b;">Name</label>
                     <input id="name" maxlength="20" type="text" name="name">
                 </div>
                 <div class="field-container">
-                    <label for="cardnumber">Card Number</label><span id="generatecard">generate random</span>
+                    <label for="cardnumber"style="color: #2b2b2b;">Card Number</label><span id="generatecard">generate random</span>
                     <input id="cardnumber" type="text" inputmode="numeric" name="CCN">
                     <svg id="ccicon" class="ccicon" width="750" height="471" viewBox="0 0 750 471" version="1.1"
                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -175,11 +174,11 @@
                     </svg>
                 </div>
                 <div class="field-container">
-                    <label for="expirationdate">Expiration (mm/yy)</label>
+                    <label for="expirationdate"style="color: #2b2b2b;">Expiration (mm/yy)</label>
                     <input id="expirationdate" type="text" inputmode="numeric" name="expDate">
                 </div>
                 <div class="field-container">
-                    <label for="securitycode">Security Code (CCV)</label>
+                    <label for="securitycode"style="color: #2b2b2b;">Security Code (CCV)</label>
                     <input id="securitycode" type="text" pattern="[0-9]*" inputmode="numeric" name="CCV">
                 </div>
             </div>

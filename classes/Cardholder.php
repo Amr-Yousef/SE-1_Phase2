@@ -15,6 +15,11 @@ class Cardholder extends Person
         return CreditCard::getCard($this->getSSN());
     }
 
+    public function isAdmin()
+    {
+        return false;
+    }
+
     public static function login($email, $password)
     {
         $table = "cardholder";

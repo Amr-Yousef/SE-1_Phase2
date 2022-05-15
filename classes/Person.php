@@ -71,4 +71,6 @@ abstract class Person
     }
 
     abstract public function logout();
+
+    abstract public function isAdmin();
 }
