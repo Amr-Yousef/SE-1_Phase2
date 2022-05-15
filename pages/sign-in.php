@@ -39,7 +39,9 @@
         if (!empty($_POST['user']) && !empty($_POST['pass'])) {
             Cardholder::login($_POST['user'], $_POST['pass']);
             if ($_SESSION['userOBJ'] != null) {
+                // echo $_SESSION['userOBJ']->getFirstName();
                 header("Location: billing.php");
+                // header("Location: https://google.com");
             } else {
                 echo "Invalid username or password!";
             }

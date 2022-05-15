@@ -10,6 +10,7 @@ session_start();
 if (!isset($_SESSION["userOBJ"])) {
     header("location:sign-in.php");
 } else {
+    // echo $_SESSION['userOBJ']->getFirstName();
     $user = $_SESSION["userOBJ"];
     $card = $user->getCard();
     $CCN = $card->getCCN();
@@ -333,7 +334,13 @@ if (!isset($_SESSION["userOBJ"])) {
                                                         ج.م.</p>
                                                 </td>
                                                 <td class="align-middle text-center text-sm">
-                                                    <span class="badge badge-sm bg-gradient-success">تمت</span>
+                                                    <?php
+                                                                                                    if ($transaction->getStatus()) {
+                                                                                                        echo '<span class="badge badge-sm bg-gradient-success">تمت</span>';
+                                                                                                    } else {
+                                                                                                        echo '<span class="badge badge-sm bg-gradient-danger">لم تتم</span>';
+                                                                                                    }
+                                                                                                    ?>
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     <p class="text-xs font-weight-bold mb-0"><?= $transaction->getDate()
@@ -342,6 +349,7 @@ if (!isset($_SESSION["userOBJ"])) {
                                                 <td class="align-middle">
                                                     <form method="post">
                                                         <button class="text-secondary font-weight-bold text-xs"
+                                                            style="border: none;background: none;text-decoration: underline;text-underline-offset: 0.3rem;text-decoration-thickness: 0.1rem;"
                                                             data-toggle="tooltip" data-original-title="Edit user"
                                                             type="submit" name="<?= $transaction->getID() ?>">
                                                             إبلاغ
