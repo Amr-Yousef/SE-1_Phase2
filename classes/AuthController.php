@@ -23,7 +23,6 @@ class AuthController
             }
             else
             {
-
                 if(count($result)==0)
                 {
                     //$_SESSION["errMsg"]="You have entered wrong email or password";
