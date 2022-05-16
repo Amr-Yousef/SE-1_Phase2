@@ -37,7 +37,7 @@
         <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link  active" href="reports.php">
+                    <a class="nav-link" href="../pages/reports.php">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1"
@@ -65,7 +65,7 @@
                     
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="sign-up_requests.php">
+                    <a class="nav-link active" href="sign-up_requests.php">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1"
@@ -138,9 +138,9 @@
                     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
                         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark"
                                 href="javascript:;">الصفحات</a></li>
-                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">البلاغات</li>
+                        <li class="breadcrumb-item text-sm text-dark" aria-current="page">طلبات التسجيل</li>
                     </ol>
-                    <h6 class="font-weight-bolder mb-0">البلاغات</h6>
+                    <h6 class="font-weight-bolder mb-0">طلبات التسجيل</h6>
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -179,101 +179,49 @@
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 تاريخ البلاغ</th>
                                             <th class="text-secondary opacity-7"></th>
+                                            <th class="text-secondary opacity-7"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                         echo'
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">الإسم الثنائي</h6>
-                            <p class="text-xs text-secondary mb-0">آخر أربعة أرقام من البطاقة</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">آلي</p>
-                        <p class="text-xs text-secondary mb-0">معدل إنحراف عالي</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">تمت</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">dd/mm/yy</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          تعديل
-                        </a>
-                      </td>
-                    </tr>'?>
                                         <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div>
-                                                        <img src="../assets/img/team-2.jpg"
-                                                            class="avatar avatar-sm me-3" alt="user1">
-                                                    </div>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">الإسم الثنائي</h6>
-                                                        <p class="text-xs text-secondary mb-0">آخر أربعة أرقام من
-                                                            البطاقة</p>
-                                                    </div>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div>
+                                                    <img src="../assets/img/team-2.jpg"
+                                                        class="avatar avatar-sm me-3" alt="user1">
                                                 </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">آلي</p>
-                                                <p class="text-xs text-secondary mb-0">معدل إنحراف عالي</p>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm bg-gradient-secondary">معلقة</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">dd/mm/yy</span>
-                                            </td>
-                                            <td class="align-middle">
-                                                <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                    data-toggle="tooltip" data-original-title="Edit user">
-                                                    تعديل
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div>
-                                                        <img src="../assets/img/team-2.jpg"
-                                                            class="avatar avatar-sm me-3" alt="user1">
-                                                    </div>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">الإسم الثنائي</h6>
-                                                        <p class="text-xs text-secondary mb-0">آخر أربعة أرقام من
-                                                            البطاقة</p>
-                                                    </div>
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">الإسم الثنائي</h6>
+                                                    <p class="text-xs text-secondary mb-0">آخر أربعة أرقام من
+                                                        البطاقة</p>
                                                 </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">آلي</p>
-                                                <p class="text-xs text-secondary mb-0">معدل إنحراف عالي</p>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm bg-gradient-blocked">حظرت</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">dd/mm/yy</span>
-                                            </td>
-                                            <td class="align-middle">
-                                                <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                    data-toggle="tooltip" data-original-title="Edit user">
-                                                    تعديل
-                                                </a>
-                                            </td>
-                                        </tr>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">01211211789</p>
+                                            <p class="text-xs text-secondary mb-0">veryrealemail@gmail.com</p>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <span class="badge badge-sm bg-gradient-secondary">معلقة</span>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <span class="text-secondary text-xs font-weight-bold">1,000ج.م.</span>
+                                        </td>
+                                        <td class="align-middle">
+                                            <a href="javascript:;" class="text-success font-weight-bold text-xs" style="text-decoration: underline; text-decoration-thickness: 0.1rem; text-underline-offset: 0.3rem;"
+                                                data-toggle="tooltip" data-original-title="Edit user">
+                                                قبول
+                                            </a>
+                                        </td>
+                                        <td class="align-middle">
+                                            <a href="javascript:;" class="text-danger font-weight-bold text-xs" style="text-decoration: underline; text-decoration-thickness: 0.1rem; text-underline-offset: 0.3rem;"
+                                                data-toggle="tooltip" data-original-title="Edit user">
+                                                رفض
+                                            </a>
+                                        </td>
+                                        </tr>'?>
                                     </tbody>
                                 </table>
                             </div>
