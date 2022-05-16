@@ -1,7 +1,7 @@
 <?php 
 require_once 'Cardholder.php';
 require_once 'CreditCard.php';
-// require_once 'Admin.php';
+//require_once 'Admin.php';
 require_once 'Person.php';
 require_once 'DBController.php';
 class AuthController
@@ -13,7 +13,8 @@ class AuthController
         $this->db=new DBController;
         if($this->db->openConnection())
         {
-            $query="select * from cardholder where email='$email' and password ='$password'";
+           
+            $query = "select * from ".$table." where email='$email' and password ='$password'";
             $result=$this->db->select($query);
             if($result===false)
             {
@@ -152,6 +153,24 @@ class AuthController
             return false;
         }
     }
+    public function updateStatus($ID)
+    {
+        $this->db = new DBController;
+        if ($this->db->openConnection()) {
+            $query = "update report set status=1 where ID='$ID'";
+            $result = $this->db->update($query);
+            if ($result === false) {
+                echo "Error in Query";
+                return false;
+            } else {
+                $this->db->closeConnection();
+                return true;
+            }
+        } else {
+            echo "Error in Database Connection";
+            return false;
+        }
+    }
     public function getBalance($CCN)
     {
         $this->db=new DBController;
@@ -195,4 +214,3 @@ class AuthController
         }
     }
 }
-?>

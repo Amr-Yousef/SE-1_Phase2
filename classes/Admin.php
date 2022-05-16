@@ -2,6 +2,7 @@
 
 require_once 'DBController.php';
 require_once 'AuthController.php';
+require_once 'reports-OOP.php';
 class Admin
 {
     private $email;
@@ -39,6 +40,7 @@ class Admin
     {
         session_destroy();
     }
+    
 }
 
 ?>
