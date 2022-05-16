@@ -40,6 +40,25 @@ class Admin
     {
         session_destroy();
     }
+    public static function insertNewAcc(){
+        
+        $db = new DBController;
+        if ($db->openConnection()) {
+            $query = "INSERT INTO cardholder 
+            SELECT * FROM newacc";
+            $result = $db->insert($query);
+            if ($result === false) {
+                echo "Error in Query";
+                return false;
+            } else {
+                $db->closeConnection();
+                return true;
+            }
+        } else {
+            echo "Error in Database Connection";
+            return false;
+        }
+    }
     
 }
 

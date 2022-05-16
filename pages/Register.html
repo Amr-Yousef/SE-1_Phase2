@@ -83,12 +83,12 @@
             </p>
             <hr class="border-bottom bg-success w-50 mx-auto">
 
-            <form class="pt-3 w-50 mx-auto pb-3">
-                <label class="pb-2 text-center"> Name </label><span id="message1">*</span>
+            <form class="pt-3 w-50 mx-auto pb-3" >
+                <label class="pb-2 text-center"> firstName </label><span id="message1">*</span>
                 <input type="text" class="form-control" placeholder="Enter your first name" id="name" required>
 
-                <label class="pt-1 pb-2 text-center">Specialization </label><span id="message2">*</span>
-                <input type="text" class="form-control" placeholder="Enter your Specialization" id="Specialization"
+                <label class="pt-1 pb-2 text-center">lastName </label><span id="message2">*</span>
+                <input type="text" class="form-control" placeholder="Enter your lastName" id="Specialization"
                     required>
 
 
@@ -99,12 +99,18 @@
                 <label class="pt-1 pb-2 text-center">Mobile/Phone </label><span id="message4"> *</span>
                 <input type="number" class="form-control" placeholder="Enter your 10 digit mobile number" id="mobile"
                     required>
+                    <label class="pt-1 pb-2 text-center">SSN </label><span id="message166"> *</span>
+                <input type="number" class="form-control" placeholder="Enter your 14 digit SS number" id="SSN"
+                    required>
 
-                <label class="pt-1 pb-2 text-center">age </label><span id="message9"> *</span>
+                <label class="pt-1 pb-2 text-center">monthlyIncome </label><span id="message1"> *</span>
                 <input type="number" class="form-control" placeholder="Enter your age " id="age" required>
 
-                <label class="pt-1 pb-2 text-center">Address</label><span class="text-danger">*</span>
-                <textarea class="form-control" value="bnj" placeholder="Enter your complete address" id="address"
+                <label class="pt-1 pb-2 text-center">country</label><span class="text-danger">*</span>
+                <textarea class="form-control" value="bnj" placeholder="Enter your country" id="country"
+                    required></textarea>
+                    <label class="pt-1 pb-2 text-center">city</label><span class="text-danger">*</span>
+                <textarea class="form-control" value="bnj" placeholder="Enter your city" id="city"
                     required></textarea>
 
                 <label class="pt-1 pb-2 text-center">Enter Password</label><span class="text-danger">*</span>
@@ -114,14 +120,7 @@
                 <input type="password" class="form-control" placeholder="Repeat password" id="password2" required>
                 <span id="message5"> </span>
 
-                <div class="row align-items-center py-3">
-
-
-                    <input class="form-control form-control-lg" id="formFileLg" type="file" />
-                    <div class="small text-muted mt-2">Upload your Medical ID or any other relevant file. Max file
-                        size 50 MB</div>
-
-                </div>
+                
 
                 <br><br>
                 <button type="button" class="form-control btn btn-outline-primary" id="submit" disabled="true"
@@ -209,13 +208,23 @@
             $('#message4').html(' Enter 10 digits').css('color', 'red');
 
     });
-    $('#age').on('keyup', function() {
-        if ($('#age').val().length == 2) {
-            $('#message9').html(' *').css('color', 'green');
+    $('#SSN').on('keyup', function() {
+        if ($('#SSN').val().length == 14) {
+            $('#message166').html(' *').css('color', 'green');
 
         } else
-            $('#message9').html(' Enter 2 digits').css('color', 'red');
+            $('#message166').html(' Enter 14 digits').css('color', 'red');
 
+    });
+    $('#age').on('keyup', function() {
+        if ($('#age').val().length != 0) {
+            $('#message1').html('*').css('color', 'green');
+            $("#submit").prop('disabled', false);
+
+        } else {
+            $('#message1').html('*').css('color', 'red');
+            $("#submit").prop('disabled', true);
+        }
     });
     </script>
 </body>

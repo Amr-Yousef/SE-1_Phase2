@@ -194,7 +194,7 @@ if (isset($_POST["submit"])) {
                                     </div>
                                     <p class="text-sm mt-3 mb-0">نسيت كلمة مرورك؟ <a href="javascript:;"
                                             class="text-dark font-weight-bolder">إسترجاع كلمة المرور.</a></p>
-                                    <p class="text-sm mt-3 mb-0">ليس لديك حساب؟ <a href="Register.php"
+                                    <p class="text-sm mt-3 mb-0">ليس لديك حساب؟ <a href="Register.html"
                                             class="text-dark font-weight-bolder"> أنشأ حساب الأن انتهز الفرصة</a></p>
                                 </form>
                             </div>

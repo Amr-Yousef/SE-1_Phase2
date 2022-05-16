@@ -1,3 +1,21 @@
+<?php
+require_once '../classes/DBController.php';
+require_once '../classes/Cardholder.php';
+require_once '../classes/CreditCard.php';
+require_once '../classes/Person.php';
+require_once '../classes/Admin.php';
+require_once '../classes/AuthController.php';
+require_once '../classes/Transaction.php';
+require_once '../classes/reports-OOP.php';
+session_start();
+
+if (!isset($_SESSION["userOBJ"])) {
+    header("location:sign-in.php");
+} else {
+    // echo $_SESSION['userOBJ']->getFirstName();
+    $user = $_SESSION["userOBJ"];
+
+?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
@@ -159,7 +177,7 @@
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header pb-0">
-                            <h6>آخر البلاغات</h6>
+                            <h6>آخر الطلبات</h6>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-0">
@@ -171,20 +189,99 @@
                                                 الحساب</th>
                                             <th
                                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                السبب</th>
+                                                المعلومات الشخصية</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 الحالة</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                تاريخ البلاغ</th>
+                                                الدخل الشهري </th>
                                             <th class="text-secondary opacity-7"></th>
                                             <th class="text-secondary opacity-7"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                         <?php
+                                            if (isset($_POST['search'])) {
+                                                $filtervalues = $_POST['search'];
+                                                $query = "SELECT * FROM report WHERE CONCAT(CCN) LIKE '%$filtervalues%' ";
+                                                include 'conn.php';
+                                                $query_run = mysqli_query($conn, $query);
+
+                                                if (mysqli_num_rows($query_run) > 0) {
+                                                    foreach ($query_run as $items) {
+                                            ?>
+                                             <tr>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div>
+                                                    <img src="../assets/img/team-2.jpg"
+                                                        class="avatar avatar-sm me-3" alt="user1">
+                                                </div>
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm"> <?=$items['firstName'].' '. $items['lastName']?></h6>
+                                                    <p class="text-xs text-secondary mb-0"><?= $items['SSN'][15] . $items['SSN'][14] . $items['SSN'][13] . $items['SSN'][12] ?></p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0"><?=$items['phoneNo'] ?></p>
+                                            <p class="text-xs text-secondary mb-0"><?=$items['email'] ?></p>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <span class="badge badge-sm bg-gradient-secondary">معلقة</span>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <span class="text-secondary text-xs font-weight-bold"><?=$items['monthlyIncome']."ج.م." ?></span>
+                                        </td>
+                                        </td>
+                                        <form method="post">
+                                                            <td class="align-middle">
+                                                                    <button class="text-secondary font-weight-bold text-xs" style="border: none;background: none;text-decoration: underline;text-underline-offset: 0.3rem;text-decoration-thickness: 0.1rem;" data-toggle="tooltip" data-original-title="Edit user" type="submit" name="<?= $items['SSN'] . "accept" ?>">
+                                                                        قبول 
+                                                                    </button>
+                                                                    <button class="text-secondary font-weight-bold text-xs" style="border: none;background: none;text-decoration: underline;text-underline-offset: 0.3rem;text-decoration-thickness: 0.1rem;" data-toggle="tooltip" data-original-title="Edit user" type="submit" name="<?= $items['SSN'] . "reject" ?>">
+                                                                        رفض
+                                                                    </button>
+                                                                </td>
+                                                            </form>
+                                        </tr>
                                         <?php
-                                        echo'
+                                                    }
+                                                } else {
+                                                    echo '<tr><td colspan="5" class="text-center">لا يوجد بيانات</td></tr>';
+                                                }
+                                            } else {
+                                                ?>
+
+                                        </tbody>
+                                        <tbody>
+                                        <?php
+                                            $query = "SELECT * FROM newacc";
+                                            include 'conn.php';
+                                            $query_run = mysqli_query($conn, $query);
+
+                                            foreach
+                                                ($query_run as $items) {
+                                                if (isset($_POST[$items['SSN'] . "accept"])) {
+                                                    
+                                                            Admin::insertNewAcc();
+                                                            include('conn.php');
+                                                            $query = mysqli_query($conn, "DELETE FROM newacc WHERE SSN = '" . $items['SSN'] . "'");
+                                                        
+                                                            echo "<script>alert('Account Added Successfully');</script>";
+                                                            break;
+                                                        
+                                                } else if (isset($_POST[$items['SSN'] . "reject"])) {
+                                                    include('conn.php');
+                                                    $query = mysqli_query($conn, "DELETE FROM newacc WHERE SSN = '" . $items['SSN']  . "'");
+                                                        echo "<script>alert('Account Removed');</script>";
+                                                    break;
+                                                }
+                                            }
+                                            foreach
+                                                ($query_run as $items) {
+                                        ?>
                                         <tr>
                                         <td>
                                             <div class="d-flex px-2 py-1">
@@ -193,35 +290,38 @@
                                                         class="avatar avatar-sm me-3" alt="user1">
                                                 </div>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">الإسم الثنائي</h6>
-                                                    <p class="text-xs text-secondary mb-0">آخر أربعة أرقام من
-                                                        البطاقة</p>
+                                                    <h6 class="mb-0 text-sm"> <?=$items['firstName'].' '. $items['lastName']?></h6>
+                                                    <p class="text-xs text-secondary mb-0"><?= $items['SSN'][13] . $items['SSN'][12] . $items['SSN'][11] . $items['SSN'][10] ?></p>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">01211211789</p>
-                                            <p class="text-xs text-secondary mb-0">veryrealemail@gmail.com</p>
+                                            <p class="text-xs font-weight-bold mb-0"><?=$items['phoneNo'] ?></p>
+                                            <p class="text-xs text-secondary mb-0"><?=$items['email'] ?></p>
                                         </td>
                                         <td class="align-middle text-center text-sm">
                                             <span class="badge badge-sm bg-gradient-secondary">معلقة</span>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">1,000ج.م.</span>
+                                            <span class="text-secondary text-xs font-weight-bold"><?=$items['monthlyIncome']."ج.م." ?></span>
                                         </td>
-                                        <td class="align-middle">
-                                            <a href="javascript:;" class="text-success font-weight-bold text-xs" style="text-decoration: underline; text-decoration-thickness: 0.1rem; text-underline-offset: 0.3rem;"
-                                                data-toggle="tooltip" data-original-title="Edit user">
-                                                قبول
-                                            </a>
                                         </td>
-                                        <td class="align-middle">
-                                            <a href="javascript:;" class="text-danger font-weight-bold text-xs" style="text-decoration: underline; text-decoration-thickness: 0.1rem; text-underline-offset: 0.3rem;"
-                                                data-toggle="tooltip" data-original-title="Edit user">
-                                                رفض
-                                            </a>
-                                        </td>
-                                        </tr>'?>
+                                        <form method="post">
+                                                            <td class="align-middle">
+                                                                    <button class="text-secondary font-weight-bold text-xs" style="border: none;background: none;text-decoration: underline;text-underline-offset: 0.3rem;text-decoration-thickness: 0.1rem;" data-toggle="tooltip" data-original-title="Edit user" type="submit" name="<?= $items['SSN'] . "accept" ?>">
+                                                                        قبول 
+                                                                    </button>
+                                                                    <button class="text-secondary font-weight-bold text-xs" style="border: none;background: none;text-decoration: underline;text-underline-offset: 0.3rem;text-decoration-thickness: 0.1rem;" data-toggle="tooltip" data-original-title="Edit user" type="submit" name="<?= $items['SSN'] . "reject" ?>">
+                                                                        رفض
+                                                                    </button>
+                                                                </td>
+                                                            </form>
+                                        </tr>
+                                        <?php
+                                                }
+                                            }
+
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -282,3 +382,4 @@
 </body>
 
 </html>
+<?php }?>

@@ -4,6 +4,8 @@ require_once 'CreditCard.php';
 //require_once 'Admin.php';
 require_once 'Person.php';
 require_once 'DBController.php';
+require_once 'Transaction.php';
+
 class AuthController
 {
     protected $db;
@@ -211,5 +213,9 @@ class AuthController
             echo "Error in Database Connection";
             return false;
         }
+    }
+    public function calDeviation(Transaction $transaction,$CCN)
+    {
+        // $transaction->getID();
     }
 }
