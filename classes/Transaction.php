@@ -116,15 +116,26 @@ class Transaction
     }
 
     public function getSecurityQuestion(){
-        $db = new DBController();
-        $result = $db->select("SELECT * FROM `securityquestion` WHERE CCN='4007702835532454'");
-        return $result[0]['question'];
+        // $db = new DBController();
+        // $qry = "SELECT * FROM 'securityquestion' WHERE CCN=$this->CCN";
+        // $result = $db->select($qry);
+        // $row = $result->fetch_assoc();
+        // return $row['question'];
+
+        // select security question from database
+        $db = mysqli_connect("localhost","root","", "cc fraud detection");
+        $qry = "SELECT * FROM securityquestion WHERE CCN=$this->CCN";
+        $result = mysqli_query($db, $qry);
+        $row = mysqli_fetch_array($result);
+        return $row['question'];
     }
 
     public function getSecurityAnswer(){
-        $db = new DBController();
-        $result = $db->select("SELECT * FROM `securityquestion` WHERE CCN='4007702835532454'");
-        return $result[0]['answer'];
+        $db = mysqli_connect("localhost","root","", "cc fraud detection");
+        $qry = "SELECT * FROM securityquestion WHERE CCN=$this->CCN";
+        $result = mysqli_query($db, $qry);
+        $row = mysqli_fetch_array($result);
+        return $row['answer'];
     }
 
     public function calDeviation()

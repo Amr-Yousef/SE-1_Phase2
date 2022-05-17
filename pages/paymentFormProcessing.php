@@ -53,18 +53,17 @@ if (isset($_POST['pay'])) {
             $phoneNo,
             $status
         );
-        
+
 
         //calculating the devation
         $deviation = $transaction->calDeviation();
         echo $deviation;
 
         $auth = new AuthController();
-        if($deviation <= 0.15){
+        if ($deviation <= 0.15) {
             if ($balance - $transaction->getTotal() < 0) {
-            echo "<script>alert('Insufficient Balance Charge your account')</script>";
-            }
-            else if ($auth->paymentFormInsertToDB(
+                echo "<script>alert('Insufficient Balance Charge your account')</script>";
+            } if ($auth->paymentFormInsertToDB(
                 $transaction->getCCN(),
                 $transaction->getDate(),
                 $transaction->getTotal(),
@@ -94,32 +93,31 @@ if (isset($_POST['pay'])) {
                 // echo $deviation;
                 // echo $transaction->getStatus();
                 header("Location: ../pages/billing.php");
+            }
         }
-        else if($deviation > 0.15 && $deviation <= 0.80){
-            $_SESSION['newTransaction'] = $transaction;
-            header("Location: securityQuestion.php");
-        } 
-        else if($deviation > 0.80) {
-            $transaction->setStatus(0);
-            $auth->paymentFormInsertToDB(
-                $transaction->getCCN(),
-                $transaction->getDate(),
-                $transaction->getTotal(),
-                $transaction->getQuantity(),
-                $transaction->getWebsite(),
-                $transaction->getDescription(),
-                $transaction->getType(),
-                $transaction->getCountry(),
-                $transaction->getCity(),
-                $transaction->getPhoneNo(),
-                $transaction->getStatus());
+             else if ($deviation > 0.15 && $deviation <= 0.80) {
+                $_SESSION['newTransaction'] = $transaction;
+                header("Location: securityQuestion.php");
+            } else if ($deviation > 0.80) {
+                $transaction->setStatus(0);
+                $auth->paymentFormInsertToDB(
+                    $transaction->getCCN(),
+                    $transaction->getDate(),
+                    $transaction->getTotal(),
+                    $transaction->getQuantity(),
+                    $transaction->getWebsite(),
+                    $transaction->getDescription(),
+                    $transaction->getType(),
+                    $transaction->getCountry(),
+                    $transaction->getCity(),
+                    $transaction->getPhoneNo(),
+                    $transaction->getStatus()
+                );
+            } else {
+                echo "we are screwed";
+            }
         }
-        else {
-            echo "we are screwed";
-        }
-    }
-
     } else {
         echo "All fields are required!";
     }
-}
+

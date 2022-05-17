@@ -10,7 +10,7 @@ session_start();
 $user = $_SESSION["userOBJ"];
 $transaction = $_SESSION["newTransaction"];
 $question = $transaction->getSecurityQuestion();
-$question = $transaction->getSecurityAnswer();
+$answer = $transaction->getSecurityAnswer();
 $card = $user->getCard();
 $CCN = $card->getCCN();
 $cvv = $card->getCVV();
@@ -53,7 +53,7 @@ $expDate = $card->getExpDate();
                             <div class="name">Question: </div>
                             <div class="value">
                                 <div class="input-group">
-                                    <input class="input--style-5" type="text" name="Acc" placeholder=$question readonly/>
+                                    <input class="input--style-5" type="text" name="Acc" placeholder=<?=$question?> readonly/>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +61,7 @@ $expDate = $card->getExpDate();
                             <div class="name">Answer: </div>
                             <div class="value">
                                 <div class="input-group">
-                                    <input class="input--style-5" type="text" name="trans" />
+                                    <input class="input--style-5" type="text" name="trans" placeholder=<?=$answer?> />
                                 </div>
                             </div>
                         </div>
