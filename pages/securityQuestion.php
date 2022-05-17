@@ -17,7 +17,100 @@ $cvv = $card->getCVV();
 $balance = $card->getBalance();
 $cardName = $card->getNameOnCard();
 $expDate = $card->getExpDate();
+$auth=new AuthController();
+if (isset($_POST["cont"])) {
+    if ( !empty($_POST['trans'])) {
+        $ans=$_POST['trans'];
+        include('conn.php');
+        $x="";
+        $query = mysqli_query($conn, "SELECT answer FROM securityquestion WHERE CCN='" . $CCN . "'");
+        $numrows = mysqli_num_rows($query);
+        if ($numrows != 0) {
+            while ($row = mysqli_fetch_assoc($query)) {
+                $x = $row['answer'];
+            }
+        }
+        if ($ans == $x) {
+            if ($balance - $transaction->getTotal() < 0) {
+                echo "<script>alert('Insufficient Balance Charge your account')</script>";
+            }
+            if ($auth->paymentFormInsertToDB(
+                $transaction->getCCN(),
+                $transaction->getDate(),
+                $transaction->getTotal(),
+                $transaction->getQuantity(),
+                $transaction->getWebsite(),
+                $transaction->getDescription(),
+                $transaction->getType(),
+                $transaction->getCountry(),
+                $transaction->getCity(),
+                $transaction->getPhoneNo(),
+                $transaction->getStatus()
+            ) && 1
+            ) {
+                $auth->updateBalance($transaction->getCCN(), $balance - $transaction->getTotal());
+                sendMail(
+                    $transaction->getCCN(),
+                    $transaction->getDate(),
+                    $transaction->getTotal(),
+                    $transaction->getQuantity(),
+                    $transaction->getWebsite(),
+                    $transaction->getDescription(),
+                    $transaction->getType(),
+                    $transaction->getCountry(),
+                    $transaction->getCity(),
+                    $transaction->getPhoneNo(),
+                    $transaction->getStatus()
+                );
+                
+              
+                header("Location: ../pages/billing.php");
+            }
+            
+        
+        }
+          else {
+            if ($balance - $transaction->getTotal() < 0) {
+                echo "<script>alert('Insufficient Balance Charge your account')</script>";
+            }
+            else{
+            $transaction->setStatus(0);
+            $auth->paymentFormInsertToDB(
+                $transaction->getCCN(),
+                $transaction->getDate(),
+                $transaction->getTotal(),
+                $transaction->getQuantity(),
+                $transaction->getWebsite(),
+                $transaction->getDescription(),
+                $transaction->getType(),
+                $transaction->getCountry(),
+                $transaction->getCity(),
+                $transaction->getPhoneNo(),
+                $transaction->getStatus()
+            );
+                $auth->updateBalance($transaction->getCCN(), $balance - $transaction->getTotal());
+                sendMail(
+                    $transaction->getCCN(),
+                    $transaction->getDate(),
+                    $transaction->getTotal(),
+                    $transaction->getQuantity(),
+                    $transaction->getWebsite(),
+                    $transaction->getDescription(),
+                    $transaction->getType(),
+                    $transaction->getCountry(),
+                    $transaction->getCity(),
+                    $transaction->getPhoneNo(),
+                    $transaction->getStatus()
+                );
 
+
+                header("Location: ../pages/billing.php");
+        }
+        }
+    } 
+} else {
+    echo "All fields are required!";
+}
 
 ?>
 <!DOCTYPE html>
