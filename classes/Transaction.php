@@ -96,6 +96,11 @@ class Transaction
         return $this->status;
     }
 
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
     public static function getAllTransactions($CCN)
     {
         $transactions = array();
@@ -108,5 +113,22 @@ class Transaction
         return $transactions;
         // $db = new DBController();
         // return $db->selectAll("transaction", "CCN", $CCN);
+    }
+
+    public function getSecurityQuestion(){
+        $db = new DBController();
+        $result = $db->select("SELECT * FROM `securityquestion` WHERE CCN='4007702835532454'");
+        return $result[0]['question'];
+    }
+
+    public function getSecurityAnswer(){
+        $db = new DBController();
+        $result = $db->select("SELECT * FROM `securityquestion` WHERE CCN='4007702835532454'");
+        return $result[0]['answer'];
+    }
+
+    public function calDeviation()
+    {
+        return AuthController::calDeviation($this);
     }
 }

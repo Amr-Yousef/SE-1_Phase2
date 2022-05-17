@@ -214,8 +214,78 @@ class AuthController
             return false;
         }
     }
-    public function calDeviation(Transaction $transaction,$CCN)
+    public static function calDeviation(Transaction $newTransaction)
     {
-        // $transaction->getID();
+        $deviation=0;
+        $CCN = $newTransaction->getCCN();
+        $cardholder = $_SESSION['userOBJ'];
+        $maxTotalIncrease = 3; // aka 300%
+        $maxQuantityIncrease = 2; // aka 100%
+        $allTotal =0;
+        $allQuantity =0;
+        $totalDeviation =0;
+        $quantityDeviation =0;
+
+        $total = $newTransaction->getTotal(); // 19% V
+        $quantity = $newTransaction->getQuantity(); // 10% V
+        $website = $newTransaction->getWebsite(); // 6% B
+        $country = $newTransaction->getCountry(); // 50% B
+        $city = $newTransaction->getCity(); // 10% B
+        $phoneNo = $newTransaction->getPhoneNo(); // 5% B
+
+        $websiteFlag = 0;
+        $countryFlag = 0;
+        $cityFlag = 0;
+        $phoneNoFlag = 0;
+
+        $allTransactions = Transaction::getAllTransactions($CCN);
+
+        //loop through all transactions to calculate the binary values
+        foreach ($allTransactions as $transaction) {
+            $allTotal += $transaction->getTotal();
+            $allQuantity += $transaction->getQuantity();
+
+            $websiteFlag = ($transaction->getWebsite() != $website) ? 1 : 0;
+            $countryFlag = ($transaction->getCountry() != $cardholder->getCountry()) ? 1 : 0;
+            $cityFlag = ($transaction->getCity() != $cardholder->getCity()) ? 1 : 0;
+            $phoneNoFlag = ($transaction->getPhoneNo() != $cardholder->getPhoneNo()) ? 1 : 0;
+        }
+
+        $avgTotal = $allTotal / count($allTransactions);
+        $avgQuantity = $allQuantity / count($allTransactions);
+
+        if($total > $avgTotal)
+        {
+            $totalDeviation = (($total - $avgTotal) / $avgTotal);
+
+            if ($totalDeviation >= $maxTotalIncrease) {
+                $totalDeviation = 0.19;
+            } else if ($totalDeviation <= 0) {
+                $totalDeviation = 0;
+            } else {
+                $totalDeviation = round(($totalDeviation * 0.19) / $maxTotalIncrease, 2);
+            }
+        }
+
+        if($quantity > $avgQuantity)
+        {
+            $quantityDeviation = (($quantity - $avgQuantity) / $avgQuantity);
+
+            if ($quantityDeviation >= $maxQuantityIncrease) {
+                $quantityDeviation = 0.1;
+            } else if ($quantityDeviation <= 0) {
+                $quantityDeviation = 0;
+            } else {
+                $quantityDeviation = round(($quantityDeviation * 0.1) / $maxQuantityIncrease, 2);
+            }
+        }
+
+        $deviation = ($websiteFlag)? $deviation + 0.06 : $deviation + 0;
+        $deviation = ($countryFlag)? $deviation + 0.5 : $deviation + 0;
+        $deviation = ($cityFlag)? $deviation + 0.1 : $deviation + 0;
+        $deviation = ($phoneNoFlag)? $deviation + 0.05 : $deviation + 0;
+        $deviation = $deviation + $totalDeviation + $quantityDeviation;
+
+        return $deviation;
     }
 }

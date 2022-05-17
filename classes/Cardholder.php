@@ -20,6 +20,14 @@ class Cardholder extends Person
         return false;
     }
 
+    public static function getCardholder($SSN){
+        $db = new DBController();
+        $result = $db->select("SELECT * FROM cardholder WHERE SSN = '$SSN'");
+        $row = $result->fetch_assoc();
+        $cardholder = new Cardholder($row['SSN'], $row['firstName'], $row['lastName'], $row['phoneNo'], $row['monthlyIncome'], $row['country'], $row['city'], $row['email'], $row['password']);
+        return $cardholder;
+    }
+
     public static function login($email, $password)
     {
         $table = "cardholder";

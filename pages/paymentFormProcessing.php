@@ -11,7 +11,7 @@ $user = $_SESSION["userOBJ"];
 $card = $user->getCard();
 $balance = $card->getBalance();
 
-        if (isset($_POST['pay'])) {
+if (isset($_POST['pay'])) {
 
     if (
         !empty($_POST['item_desc'])
@@ -54,26 +54,17 @@ $balance = $card->getBalance();
             $status
         );
         
+
+        //calculating the devation
+        $deviation = $transaction->calDeviation();
+        echo $deviation;
+
         $auth = new AuthController();
-        if ($balance - $transaction->getTotal() < 0) {
-        echo "<script>alert('Insufficient Balance Charge your account')</script>";
-            // header("Location: ../pages/billing.php");
-        } 
-        else if ($auth->paymentFormInsertToDB(
-            $transaction->getCCN(),
-            $transaction->getDate(),
-            $transaction->getTotal(),
-            $transaction->getQuantity(),
-            $transaction->getWebsite(),
-            $transaction->getDescription(),
-            $transaction->getType(),
-            $transaction->getCountry(),
-            $transaction->getCity(),
-            $transaction->getPhoneNo(),
-            $transaction->getStatus()
-        )) {
-            $auth->updateBalance($transaction->getCCN(), $balance - $transaction->getTotal());
-            sendMail(
+        if($deviation <= 0.15){
+            if ($balance - $transaction->getTotal() < 0) {
+            echo "<script>alert('Insufficient Balance Charge your account')</script>";
+            }
+            else if ($auth->paymentFormInsertToDB(
                 $transaction->getCCN(),
                 $transaction->getDate(),
                 $transaction->getTotal(),
@@ -85,10 +76,48 @@ $balance = $card->getBalance();
                 $transaction->getCity(),
                 $transaction->getPhoneNo(),
                 $transaction->getStatus()
-            );
-            
-            header("Location: ../pages/billing.php");
+            ) && 1) {
+                $auth->updateBalance($transaction->getCCN(), $balance - $transaction->getTotal());
+                // sendMail(
+                //     $transaction->getCCN(),
+                //     $transaction->getDate(),
+                //     $transaction->getTotal(),
+                //     $transaction->getQuantity(),
+                //     $transaction->getWebsite(),
+                //     $transaction->getDescription(),
+                //     $transaction->getType(),
+                //     $transaction->getCountry(),
+                //     $transaction->getCity(),
+                //     $transaction->getPhoneNo(),
+                //     $transaction->getStatus()
+                // );
+                // echo $deviation;
+                // echo $transaction->getStatus();
+                header("Location: ../pages/billing.php");
         }
+        else if($deviation > 0.15 && $deviation <= 0.80){
+            $_SESSION['newTransaction'] = $transaction;
+            header("Location: securityQuestion.php");
+        } 
+        else if($deviation > 0.80) {
+            $transaction->setStatus(0);
+            $auth->paymentFormInsertToDB(
+                $transaction->getCCN(),
+                $transaction->getDate(),
+                $transaction->getTotal(),
+                $transaction->getQuantity(),
+                $transaction->getWebsite(),
+                $transaction->getDescription(),
+                $transaction->getType(),
+                $transaction->getCountry(),
+                $transaction->getCity(),
+                $transaction->getPhoneNo(),
+                $transaction->getStatus());
+        }
+        else {
+            echo "we are screwed";
+        }
+    }
 
     } else {
         echo "All fields are required!";

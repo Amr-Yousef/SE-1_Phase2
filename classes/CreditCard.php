@@ -71,6 +71,19 @@ class CreditCard
         }
     }
 
+    public static function getCardholderSSN($CCN){
+        $db = mysqli_connect("localhost","root","", "cc fraud detection");
+        $sql = "SELECT SSN FROM creditcards WHERE CCN = '$CCN'";
+        $result = mysqli_query($db, $sql);
+        $row = mysqli_fetch_array($result);
+        if ($row) {
+            if ($row['CCN'] == $CCN) {
+                return $row['SSN'];
+            }
+        } else {
+            return null;
+        }
+    }
     
     public function getAllTransactions()
     {
